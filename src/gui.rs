@@ -4,6 +4,13 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
+pub const ADD: char = 'a';
+pub const SUBTRACT: char = 's';
+pub const MULTIPLY: char = 'm';
+pub const DIVIDE: char = 'd';
+pub const EQUALS: char = 'e';
+pub const NONE: char = 'n';
+
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
     window.set_title("GTK calc");
@@ -27,6 +34,8 @@ pub fn build_ui(application: &gtk::Application) {
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
+    let previous_operation = Rc::new(Cell::new(NONE));
+    let current_operation = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
@@ -71,12 +80,39 @@ pub fn build_ui(application: &gtk::Application) {
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
 
-    plus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
-        let nb = entry.text()
-            .parse()
-            .unwrap_or(0.0);
-            entry.set_text(&format!("{}", nb + 1.1));
-    }));
+    // plus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
+    //     let nb = entry.text()
+    //         .parse()
+    //         .unwrap_or(0.0);
+    //         entry.set_text(&format!("{}", nb + 1.1));
+    // }));
+
+    plus_button.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
+        @strong previous_operation, @strong entry =>
+        move |_| {
+            // Increase the counter
+            num_counter.set(num_counter.get() + 1);
+
+            if num_counter.get() == 2 {
+                // Set previous and current operation
+                previous_operation.set(current_operation.get());
+                current_operation.set(ADD);
+
+                // Do operation
+                operation(previous_operation.get(), &value_1, value_2.get());
+
+                // Decrease the num counter and reset num2
+                num_counter.set(num_counter.get() - 1);
+                value_2.set(0.0);
+            }
+            else {
+                current_operation.set(ADD);
+            }
+
+            entry.insert_text("+", &mut -1);
+
+        }));
+
     minus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
         let nb = entry.text()
             .parse()
@@ -96,6 +132,28 @@ pub fn build_ui(application: &gtk::Application) {
             entry.set_text(&format!("{}", nb / 1.4));
     }));
 
+    equals_bttn.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
+        @strong entry =>
+        move |_| {
+            // Increase the counter
+            num_counter.set(num_counter.get() + 1);
+
+            if num_counter.get() == 2 {
+                let result = the_result(current_operation.get(), &value_1, value_2.get());
+
+                entry.set_text(&result);
+
+                previous_operation.set(EQUALS);
+
+                // reset variables
+                num_counter.set(0);
+                value_1.set(0.0);
+                value_2.set(0.0);
+                current_operation.set(NONE);
+            }
+        
+        }));
+
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);
@@ -103,4 +161,46 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&equals_bttn,  2, 4, 1, 1);
 
     window.show_all();
+}
+
+pub fn set_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    if num_counter == 0 {
+        value_1.set(value_1.get() * 10.0 + num);
+    }
+    if num_counter == 1 {
+        value_2.set(value_2.get() * 10.0 + num);
+    }
+}
+
+pub fn operation(pre_ops: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
+    match pre_ops {
+        ADD => value_1.set(value_1.get() + value_2),
+        SUBTRACT => value_1.set(value_1.get() - value_2),
+        MULTIPLY => value_1.set(value_1.get() * value_2),
+        _=> ()
+    }
+    if pre_ops == DIVIDE && value_2 != 0.0 {
+        value_1.set(value_1.get() / value_2);
+    }
+}
+
+fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64)
+-> std::string::String {
+    let mut result = String::from("= ");
+    match current_operation {
+        ADD => {value_1.set(value_1.get() + value_2);},
+        SUBTRACT => {value_1.set(value_1.get() - value_2);},
+        MULTIPLY => {value_1.set(value_1.get() * value_2);},
+        _=> ()
+    }
+    if current_operation == DIVIDE && value_2 != 0.0 {
+        value_1.set(value_1.get() / value_2);
+    }
+    if current_operation == DIVIDE && value_2 == 0.0 {
+        result =  String::from("Error: divide by 0");
+    }
+    else {
+        result.push_str(&value_1.get().to_string());
+    }
+    result
 }
