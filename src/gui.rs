@@ -16,21 +16,20 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_title("GTK calc");
     window.set_default_size(200, 120);
 
-    // Construct the grid that is going contain buttons
-    let margin = 6;
+    // --> CREATE GRID
+    let margin = 5;
     let grid = gtk::Grid::builder()
         .margin_start(margin)
         .margin_end(margin)
         .margin_top(margin)
         .margin_bottom(margin)
-        .halign(gtk::Align::Center)
-        .valign(gtk::Align::Center)
         .row_spacing(margin)
         .column_spacing(margin)
         .build();
 
     window.set_child(Some(&grid));
 
+    // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
@@ -44,6 +43,7 @@ pub fn build_ui(application: &gtk::Application) {
         .build();
     grid.attach(&entry, 0, 0, 4 ,1);
 
+    // --> CREATE NUM BUTTONS
     let button_1 = gtk::Button::with_label("1");
     let button_2 = gtk::Button::with_label("2");
     let button_3 = gtk::Button::with_label("3");
@@ -55,12 +55,15 @@ pub fn build_ui(application: &gtk::Application) {
     let button_9 = gtk::Button::with_label("9");
     let button_0 = gtk::Button::with_label("0");
 
-    button_1.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, 
-        @strong entry =>
+    // --> CONNECT FUNCTION
+    button_1.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
         move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
 
+    // --> ATTACH NUM BUTTONS TO GRID
     grid.attach(&button_1, 0, 1, 1, 1);
     grid.attach(&button_2, 1, 1, 1, 1);
     grid.attach(&button_3, 2, 1, 1, 1);
@@ -72,7 +75,6 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&button_9, 2, 3, 1, 1);
     grid.attach(&button_0, 0, 4, 2, 1);
 
-
     // --> OPERATORS
     let plus_button  = gtk::Button::with_label("+");
     let minus_button = gtk::Button::with_label("-");
@@ -80,17 +82,11 @@ pub fn build_ui(application: &gtk::Application) {
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
 
-    // plus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
-    //     let nb = entry.text()
-    //         .parse()
-    //         .unwrap_or(0.0);
-    //         entry.set_text(&format!("{}", nb + 1.1));
-    // }));
-
+    // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
         @strong previous_operation, @strong entry =>
         move |_| {
-            // Increase the counter
+            // Increase num_counter
             num_counter.set(num_counter.get() + 1);
 
             if num_counter.get() == 2 {
@@ -98,21 +94,17 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                // Do operation
                 operation(previous_operation.get(), &value_1, value_2.get());
 
-                // Decrease the num counter and reset num2
                 num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0);
+                value_2.set(0.0); // Reset to 0
             }
             else {
                 current_operation.set(ADD);
             }
-
             entry.insert_text("+", &mut -1);
-
         }));
-
+    // FIXIT
     minus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
         let nb = entry.text()
             .parse()
@@ -135,25 +127,24 @@ pub fn build_ui(application: &gtk::Application) {
     equals_bttn.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
         @strong entry =>
         move |_| {
-            // Increase the counter
+            // Increase num_counter
             num_counter.set(num_counter.get() + 1);
 
             if num_counter.get() == 2 {
                 let result = the_result(current_operation.get(), &value_1, value_2.get());
 
                 entry.set_text(&result);
-
                 previous_operation.set(EQUALS);
 
-                // reset variables
+                // Reset variables
                 num_counter.set(0);
                 value_1.set(0.0);
                 value_2.set(0.0);
                 current_operation.set(NONE);
             }
-        
         }));
 
+    // --> ATTACH OPERATORS TO GRID
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);
@@ -184,8 +175,7 @@ pub fn operation(pre_ops: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
     }
 }
 
-fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64)
--> std::string::String {
+fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
     let mut result = String::from("= ");
     match current_operation {
         ADD => {value_1.set(value_1.get() + value_2);},
