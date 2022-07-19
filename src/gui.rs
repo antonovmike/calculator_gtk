@@ -36,15 +36,15 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&entry, 0, 0, 4 ,1);
 
     let button_1 = gtk::Button::with_label("1");
-    let button_1 = gtk::Button::with_label("2");
-    let button_1 = gtk::Button::with_label("3");
-    let button_1 = gtk::Button::with_label("4");
-    let button_1 = gtk::Button::with_label("5");
-    let button_1 = gtk::Button::with_label("6");
-    let button_1 = gtk::Button::with_label("7");
-    let button_1 = gtk::Button::with_label("8");
-    let button_1 = gtk::Button::with_label("9");
-    let button_1 = gtk::Button::with_label("0");
+    let button_2 = gtk::Button::with_label("2");
+    let button_3 = gtk::Button::with_label("3");
+    let button_4 = gtk::Button::with_label("4");
+    let button_5 = gtk::Button::with_label("5");
+    let button_6 = gtk::Button::with_label("6");
+    let button_7 = gtk::Button::with_label("7");
+    let button_8 = gtk::Button::with_label("8");
+    let button_9 = gtk::Button::with_label("9");
+    let button_0 = gtk::Button::with_label("0");
 
     button_1.connect_clicked(clone!(@strong val1, @strong val2, @strong num_counter, 
         @strong entry =>
