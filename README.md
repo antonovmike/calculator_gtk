@@ -1,5 +1,5 @@
 # calculator_gtk
 
-fix operators
+fix all buttons
 
-add math
+fix -*/ operators
