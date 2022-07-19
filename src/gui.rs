@@ -24,8 +24,8 @@ pub fn build_ui(application: &gtk::Application) {
 
     window.set_child(Some(&grid));
 
-    let val1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let val2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
     let entry = Entry::builder()
         .margin_start(margin)
@@ -46,7 +46,7 @@ pub fn build_ui(application: &gtk::Application) {
     let button_9 = gtk::Button::with_label("9");
     let button_0 = gtk::Button::with_label("0");
 
-    button_1.connect_clicked(clone!(@strong val1, @strong val2, @strong num_counter, 
+    button_1.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, 
         @strong entry =>
         move |_| {
             entry.insert_text("1", &mut -1);
@@ -61,7 +61,7 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&button_7, 0, 3, 1, 1);
     grid.attach(&button_8, 1, 3, 1, 1);
     grid.attach(&button_9, 2, 3, 1, 1);
-    grid.attach(&button_0, 0, 4, 3, 1);
+    grid.attach(&button_0, 0, 4, 2, 1);
 
 
     // --> OPERATORS
@@ -69,6 +69,7 @@ pub fn build_ui(application: &gtk::Application) {
     let minus_button = gtk::Button::with_label("-");
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
+    let equals_bttn  = gtk::Button::with_label("=");
 
     plus_button.connect_clicked(glib::clone!(@weak entry => move |_| {
         let nb = entry.text()
@@ -99,6 +100,7 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);
     grid.attach(&div_button,   3, 4, 1, 1);
+    grid.attach(&equals_bttn,  2, 4, 1, 1);
 
     window.show_all();
 }
