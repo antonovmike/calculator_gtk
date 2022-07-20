@@ -177,13 +177,26 @@ pub fn build_ui(application: &gtk::Application) {
             }
             entry.insert_text("-", &mut -1);
         }));
+
+    mult_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong previous_operation, @strong current_operation =>
+        move |_| {
+            num_counter.set(num_counter.get() + 1);
+            if num_counter.get() == 2 {
+                previous_operation.set(current_operation.get());
+                current_operation.set(MULTIPLY);
+                operation(previous_operation.get(), &value_1, value_2.get());
+                num_counter.set(num_counter.get() - 1);
+                value_2.set(0.0);
+            }
+            else {
+                current_operation.set(MULTIPLY);
+            }
+            entry.insert_text("\u{00D7}", &mut -1);
+        }));
+
     // FIXIT
-    mult_button.connect_clicked(glib::clone!(@weak entry => move |_| {
-        let nb = entry.text()
-            .parse()
-            .unwrap_or(0.0);
-            entry.set_text(&format!("{}", nb * 1.3));
-    }));
     div_button.connect_clicked(glib::clone!(@weak entry => move |_| {
         let nb = entry.text()
             .parse()
