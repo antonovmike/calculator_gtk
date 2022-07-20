@@ -5,3 +5,5 @@
 fix all buttons
 
 fix -*/ operators
+
+make Entry scrollable!
