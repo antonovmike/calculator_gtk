@@ -4,12 +4,12 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-pub const ADD: char = 'a';
-pub const SUBTRACT: char = 's';
-pub const MULTIPLY: char = 'm';
-pub const DIVIDE: char = 'd';
-pub const EQUALS: char = 'e';
-pub const NONE: char = 'n';
+pub const ADD: char = '+';
+pub const SUBTRACT: char = '-';
+pub const MULTIPLY: char = '*';
+pub const DIVIDE: char = '/';
+pub const EQUALS: char = '=';
+pub const NONE: char = '0';
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
@@ -177,20 +177,23 @@ pub fn operation(pre_ops: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
     let mut result = String::from("= ");
+    let operation_string = format!("{}{}{}", value_1.get(), current_operation, value_2);
+    // println!("operation_string: {}", operation_string);
+    // dbg!("{:?}", &result);
     match current_operation {
-        ADD => {value_1.set(value_1.get() + value_2);},
-        SUBTRACT => {value_1.set(value_1.get() - value_2);},
-        MULTIPLY => {value_1.set(value_1.get() * value_2);},
+        ADD =>      { value_1.set(value_1.get() + value_2); },
+        SUBTRACT => { value_1.set(value_1.get() - value_2); },
+        MULTIPLY => { value_1.set(value_1.get() * value_2); },
+        DIVIDE =>   { value_1.set(value_1.get() / value_2); },
         _=> ()
-    }
-    if current_operation == DIVIDE && value_2 != 0.0 {
-        value_1.set(value_1.get() / value_2);
     }
     if current_operation == DIVIDE && value_2 == 0.0 {
         result =  String::from("Error: divide by 0");
     }
     else {
-        result.push_str(&value_1.get().to_string());
+        result.push_str( &value_1.get().to_string() );
+        result = format!("{}{}", operation_string, result)
     }
+    // dbg!("{:?}", &result);
     result
 }
