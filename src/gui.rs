@@ -255,7 +255,7 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
 }
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
-    let mut result = String::from("= ");
+    let mut result = String::from(" = ");
 
     let operation_symbol = match current_operation {
         ADD =>      "+",
