@@ -41,7 +41,7 @@ pub fn build_ui(application: &gtk::Application) {
         .margin_end(margin)
         .margin_bottom(margin)
         .build();
-    grid.attach(&entry, 0, 0, 4 ,1);
+    grid.attach(&entry, 0, 0, 3 ,1);
 
     // --> CREATE NUM BUTTONS
     let button_1 = gtk::Button::with_label("1");
@@ -136,6 +136,7 @@ pub fn build_ui(application: &gtk::Application) {
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
     let dot_button   = gtk::Button::with_label("."); // FIX IT
+    let clear_button = gtk::Button::with_label("C");
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -242,7 +243,8 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong entry =>
         move |_| {
             // Add the '.' to value
-            set_value(num_counter.get(), &value_1, &value_2, 0.0); // Turns '.' into 0. "0.05" would turn into 5, "1.01" - into 105
+            // !!! Turns '.' into 0. Example: "0.05" would turn into 5, "1.01" - into 105
+            set_value(num_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text(".", &mut -1); // Doesn't work yet
         }));
 
@@ -253,6 +255,7 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&div_button,   3, 4, 1, 1);
     grid.attach(&equals_bttn,  2, 4, 1, 1);
     grid.attach(&dot_button,   0, 4, 1, 1);
+    grid.attach(&clear_button, 3, 0, 1 ,1);
 
     window.show_all();
 }
@@ -278,7 +281,7 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
     let mut result = String::from(" = ");
-
+    // Add operation symbol to variable
     let operation_symbol = match current_operation {
         ADD =>      "+",
         SUBTRACT => "-",

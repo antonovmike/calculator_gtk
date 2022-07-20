@@ -2,6 +2,8 @@
 
 ![calculator_gtk](https://github.com/antonovmike/calculator_gtk/blob/main/calculator_gtk.gif)
 
+Add 'clear' button
+
 fix all buttons
 
 fix -*/ operators
