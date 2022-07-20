@@ -92,6 +92,30 @@ pub fn build_ui(application: &gtk::Application) {
             set_value(num_counter.get(), &value_1, &value_2, 6.0);
             entry.insert_text("6", &mut -1);
         }));
+    button_7.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 7.0);
+            entry.insert_text("7", &mut -1);
+        }));
+    button_8.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 8.0);
+            entry.insert_text("8", &mut -1);
+        }));
+    button_9.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 9.0);
+            entry.insert_text("9", &mut -1);
+        }));
+    button_0.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 0.0);
+            entry.insert_text("0", &mut -1);
+        }));
 
     // --> ATTACH NUM BUTTONS TO GRID
     grid.attach(&button_1, 0, 1, 1, 1);
