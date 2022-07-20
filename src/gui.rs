@@ -204,8 +204,8 @@ pub fn build_ui(application: &gtk::Application) {
             entry.set_text(&format!("{}", nb / 1.4));
     }));
 
-    equals_bttn.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
-        @strong entry =>
+    equals_bttn.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry =>
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
@@ -222,6 +222,13 @@ pub fn build_ui(application: &gtk::Application) {
                 value_2.set(0.0);
                 current_operation.set(NONE);
             }
+        }));
+
+    // FIX IT
+    dot_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry =>
+        move |_| {
+            // Add the '.' to value
         }));
 
     // --> ATTACH OPERATORS TO GRID
