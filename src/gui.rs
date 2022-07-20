@@ -163,15 +163,13 @@ pub fn set_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f6
     }
 }
 
-pub fn operation(pre_ops: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
-    match pre_ops {
+pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
+    match previous_operation {
         ADD => value_1.set(value_1.get() + value_2),
         SUBTRACT => value_1.set(value_1.get() - value_2),
         MULTIPLY => value_1.set(value_1.get() * value_2),
+        DIVIDE   => value_1.set(value_1.get() / value_2),
         _=> ()
-    }
-    if pre_ops == DIVIDE && value_2 != 0.0 {
-        value_1.set(value_1.get() / value_2);
     }
 }
 
