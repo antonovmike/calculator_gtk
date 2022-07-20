@@ -242,8 +242,6 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong entry =>
         move |_| {
             // Add the '.' to value
-            set_value(num_counter.get(), &value_1, &value_2, 0.0); // Turns '.' into 0. "0.05" would turn into 5, "1.01" - into 105
-            entry.insert_text(".", &mut -1); // Doesn't work yet
         }));
 
     // --> ATTACH OPERATORS TO GRID
