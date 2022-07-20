@@ -73,7 +73,7 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&button_7, 0, 3, 1, 1);
     grid.attach(&button_8, 1, 3, 1, 1);
     grid.attach(&button_9, 2, 3, 1, 1);
-    grid.attach(&button_0, 0, 4, 2, 1);
+    grid.attach(&button_0, 1, 4, 1, 1);
 
     // --> OPERATORS
     let plus_button  = gtk::Button::with_label("+");
@@ -81,6 +81,7 @@ pub fn build_ui(application: &gtk::Application) {
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
+    let dot_button   = gtk::Button::with_label(".");
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
@@ -150,6 +151,7 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&mult_button,  3, 3, 1, 1);
     grid.attach(&div_button,   3, 4, 1, 1);
     grid.attach(&equals_bttn,  2, 4, 1, 1);
+    grid.attach(&dot_button,   0, 4, 1, 1);
 
     window.show_all();
 }
