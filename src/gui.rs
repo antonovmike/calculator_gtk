@@ -256,7 +256,16 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
     let mut result = String::from("= ");
-    let operation_string = format!("{}{}{}", value_1.get(), current_operation, value_2);
+
+    let operation_symbol = match current_operation {
+        ADD =>      "+",
+        SUBTRACT => "-",
+        MULTIPLY => "\u{00D7}",
+        DIVIDE =>   "\u{00F7}",
+        _=> "_"
+    };
+
+    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
     // println!("operation_string: {}", operation_string);
     // dbg!("{:?}", &result);
     match current_operation {
