@@ -62,6 +62,60 @@ pub fn build_ui(application: &gtk::Application) {
             set_value(num_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
+    button_2.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 2.0);
+            entry.insert_text("2", &mut -1);
+        }));
+    button_3.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 3.0);
+            entry.insert_text("3", &mut -1);
+        }));
+    button_4.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 4.0);
+            entry.insert_text("4", &mut -1);
+        }));
+    button_5.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 5.0);
+            entry.insert_text("5", &mut -1);
+        }));
+    button_6.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 6.0);
+            entry.insert_text("6", &mut -1);
+        }));
+    button_7.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 7.0);
+            entry.insert_text("7", &mut -1);
+        }));
+    button_8.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 8.0);
+            entry.insert_text("8", &mut -1);
+        }));
+    button_9.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 9.0);
+            entry.insert_text("9", &mut -1);
+        }));
+    button_0.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 0.0);
+            entry.insert_text("0", &mut -1);
+        }));
 
     // --> ATTACH NUM BUTTONS TO GRID
     grid.attach(&button_1, 0, 1, 1, 1);
@@ -81,7 +135,7 @@ pub fn build_ui(application: &gtk::Application) {
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
-    let dot_button   = gtk::Button::with_label(".");
+    let dot_button   = gtk::Button::with_label("."); // FIX IT
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -90,7 +144,7 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
-
+            // After second number
             if num_counter.get() == 2 {
                 // Set previous and current operation
                 previous_operation.set(current_operation.get());
@@ -179,7 +233,7 @@ pub fn set_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f6
 
 pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
     match previous_operation {
-        ADD => value_1.set(value_1.get() + value_2),
+        ADD      => value_1.set(value_1.get() + value_2),
         SUBTRACT => value_1.set(value_1.get() - value_2),
         MULTIPLY => value_1.set(value_1.get() * value_2),
         DIVIDE   => value_1.set(value_1.get() / value_2),
