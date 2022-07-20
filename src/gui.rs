@@ -5,11 +5,11 @@ use gtk::prelude::*;
 use glib_macros::clone;
 
 pub const ADD: char = '+';
-pub const SUBTRACT: char = 's';
-pub const MULTIPLY: char = 'm';
-pub const DIVIDE: char = 'd';
-pub const EQUALS: char = 'e';
-pub const NONE: char = 'n';
+pub const SUBTRACT: char = '-';
+pub const MULTIPLY: char = '*';
+pub const DIVIDE: char = '/';
+pub const EQUALS: char = '=';
+pub const NONE: char = '0';
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
