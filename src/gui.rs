@@ -144,7 +144,7 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
-            // After second number
+            // After second number has been inserted
             if num_counter.get() == 2 {
                 // Set previous and current operation
                 previous_operation.set(current_operation.get());
@@ -196,20 +196,31 @@ pub fn build_ui(application: &gtk::Application) {
             entry.insert_text("\u{00D7}", &mut -1);
         }));
 
-    // FIXIT
-    div_button.connect_clicked(glib::clone!(@weak entry => move |_| {
-        let nb = entry.text()
-            .parse()
-            .unwrap_or(0.0);
-            entry.set_text(&format!("{}", nb / 1.4));
-    }));
+    div_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong previous_operation, @strong current_operation =>
+        move |_| {
+            num_counter.set(num_counter.get() + 1);
+        
+            if num_counter.get() == 2 {
+                previous_operation.set(current_operation.get());
+                current_operation.set(DIVIDE);
+                operation(previous_operation.get(), &value_1, value_2.get());
+                num_counter.set(num_counter.get() - 1);
+                value_2.set(0.0);
+            }
+            else {
+                current_operation.set(DIVIDE);
+            }
+            entry.insert_text("\u{00F7}", &mut -1);
+        }));
 
-    equals_bttn.connect_clicked(clone!(@strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
-        @strong entry =>
+    equals_bttn.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry =>
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
-
+            // After second number has been inserted
             if num_counter.get() == 2 {
                 let result = the_result(current_operation.get(), &value_1, value_2.get());
 
@@ -222,6 +233,17 @@ pub fn build_ui(application: &gtk::Application) {
                 value_2.set(0.0);
                 current_operation.set(NONE);
             }
+        }));
+
+    // --> FIX IT <--
+    // --> FIX IT <--
+    // --> FIX IT <--
+    dot_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry =>
+        move |_| {
+            // Add the '.' to value
+            set_value(num_counter.get(), &value_1, &value_2, 0.0); // Turns '.' into 0. "0.05" would turn into 5, "1.01" - into 105
+            entry.insert_text(".", &mut -1); // Doesn't work yet
         }));
 
     // --> ATTACH OPERATORS TO GRID
@@ -255,7 +277,7 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
 }
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
-    let mut result = String::from("= ");
+    let mut result = String::from(" = ");
 
     let operation_symbol = match current_operation {
         ADD =>      "+",
