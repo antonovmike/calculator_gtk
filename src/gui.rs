@@ -135,7 +135,7 @@ pub fn build_ui(application: &gtk::Application) {
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
-    let dot_button   = gtk::Button::with_label(".");
+    let dot_button   = gtk::Button::with_label("."); // FIX IT
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -144,7 +144,7 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
-
+            // After second number
             if num_counter.get() == 2 {
                 // Set previous and current operation
                 previous_operation.set(current_operation.get());
