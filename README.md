@@ -7,3 +7,5 @@ fix all buttons
 fix -*/ operators
 
 make Entry scrollable!
+
+How to not turn '.' into 0?
