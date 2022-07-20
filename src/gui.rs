@@ -177,13 +177,26 @@ pub fn build_ui(application: &gtk::Application) {
             }
             entry.insert_text("-", &mut -1);
         }));
+
+    mult_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong previous_operation, @strong current_operation =>
+        move |_| {
+            num_counter.set(num_counter.get() + 1);
+            if num_counter.get() == 2 {
+                previous_operation.set(current_operation.get());
+                current_operation.set(MULTIPLY);
+                operation(previous_operation.get(), &value_1, value_2.get());
+                num_counter.set(num_counter.get() - 1);
+                value_2.set(0.0);
+            }
+            else {
+                current_operation.set(MULTIPLY);
+            }
+            entry.insert_text("\u{00D7}", &mut -1);
+        }));
+
     // FIXIT
-    mult_button.connect_clicked(glib::clone!(@weak entry => move |_| {
-        let nb = entry.text()
-            .parse()
-            .unwrap_or(0.0);
-            entry.set_text(&format!("{}", nb * 1.3));
-    }));
     div_button.connect_clicked(glib::clone!(@weak entry => move |_| {
         let nb = entry.text()
             .parse()
@@ -243,7 +256,16 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
 
 fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
     let mut result = String::from("= ");
-    let operation_string = format!("{}{}{}", value_1.get(), current_operation, value_2);
+
+    let operation_symbol = match current_operation {
+        ADD =>      "+",
+        SUBTRACT => "-",
+        MULTIPLY => "\u{00D7}",
+        DIVIDE =>   "\u{00F7}",
+        _=> "_"
+    };
+
+    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
     // println!("operation_string: {}", operation_string);
     // dbg!("{:?}", &result);
     match current_operation {
