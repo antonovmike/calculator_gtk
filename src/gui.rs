@@ -62,6 +62,18 @@ pub fn build_ui(application: &gtk::Application) {
             set_value(num_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
+    button_2.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 2.0);
+            entry.insert_text("2", &mut -1);
+        }));
+    button_3.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry =>
+        move |_| {
+            set_value(num_counter.get(), &value_1, &value_2, 3.0);
+            entry.insert_text("3", &mut -1);
+        }));
 
     // --> ATTACH NUM BUTTONS TO GRID
     grid.attach(&button_1, 0, 1, 1, 1);
@@ -179,7 +191,7 @@ pub fn set_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f6
 
 pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
     match previous_operation {
-        ADD => value_1.set(value_1.get() + value_2),
+        ADD      => value_1.set(value_1.get() + value_2),
         SUBTRACT => value_1.set(value_1.get() - value_2),
         MULTIPLY => value_1.set(value_1.get() * value_2),
         DIVIDE   => value_1.set(value_1.get() / value_2),
