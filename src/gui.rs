@@ -272,7 +272,7 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
         move |_| {
             // CLEAR
-            entry.set_text("CHECK");
+            entry.set_text("");
         }));
 
     // --> ATTACH OPERATORS TO GRID
@@ -342,7 +342,7 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
     }
     else {
         result.push_str( &value_1.get().to_string() );
-        result = format!("{}{}", operation_string, result)
+        result = format!("{}{} ", operation_string, result)
     }
     // dbg!("{:?}", &result);
     result
