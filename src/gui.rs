@@ -267,6 +267,8 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             // CLEAR
             num_counter.set(0);
+            value_1.set(0.0);
+            value_2.set(0.0);
             entry.set_text("");
         }));
 
@@ -291,8 +293,8 @@ pub fn build_ui(application: &gtk::Application) {
 // }
 
 pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    println!("{}", dot_detector);
     if dot_detector == '.' {
+        println!("dot_detector: {}", dot_detector);
         if num_counter == 0 {
             value_1.set(value_1.get() + num);
         }
