@@ -147,10 +147,9 @@ pub fn build_ui(application: &gtk::Application) {
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
+    // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
-    // gtk_widget_set_halign(GTK_WIDGET(clear_button), GTK_ALIGN_END);
-    // builder.get_object("clear_button").set_alignment(0,0);
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -256,11 +255,11 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
         move |_| {
-            dot_detector.set('.');
-            entry.insert_text(".", &mut -1); // Doesn't work yet
+            dot_detector.set('.'); // Doesn't work yet
+            entry.insert_text(".", &mut -1); // Add '.' to entry
         }));
 
-    // --> FIX IT <--
+    // --> CHECK IT <--
     // not important
     clear_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong  value_1_temp =>
@@ -272,7 +271,7 @@ pub fn build_ui(application: &gtk::Application) {
             entry.set_text("");
         }));
 
-    // --> ATTACH OPERATORS TO GRID
+    // --> ATTACH OPERATORS AND EXTRA BUTTONS TO GRID
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);

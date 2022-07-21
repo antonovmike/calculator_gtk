@@ -12,7 +12,7 @@ Listen for keyboard events
 
 FIX:
 
--*/ operators
+'.' button. Try to add dot_detector checker to each numeric button function. If it is true - add each digit after '.' pressed to value_1_temp
 
 make Entry scrollable!
 
