@@ -268,7 +268,7 @@ pub fn build_ui(application: &gtk::Application) {
 }
 
 pub fn set_value(num_counter: i32, value_1_temp: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if value_1_temp == '_' {
+    if value_1_temp == '.' {
         if num_counter == 0 {
             value_1.set(value_1.get() + num);
         }
