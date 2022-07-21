@@ -6,24 +6,22 @@
 
 ADD:
 
-'clear' button
-
 Listen for keyboard events
 
 --------------------
 
 FIX:
 
-all buttons
-
 -*/ operators
 
 make Entry scrollable!
+
+'clear' button
 
 --------------------
 
 ISSUES:
 
-How to not turn '.' into 0?
+How to add digitafter '.'?
 
 --------------------

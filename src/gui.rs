@@ -256,20 +256,14 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
         move |_| {
-            // Add the '.' to value
-            // !!! Turns '.' into 0. Example: "0.05" would turn into 5, "1.01" - into 105
-            // value_1_temp = add_dot(value_1, value_1_temp);
-            // let my_int = value_1.parse::<f64>().unwrap();
-            // let temp_val_1 = set_value(num_counter.get(), &value_1, &value_2, 0.0);
-            // add_dot(num_counter.get(), &value_1, &value_2, 1.0);
+            dot_detector.set('.');
             entry.insert_text(".", &mut -1); // Doesn't work yet
         }));
 
-    // --> FIX IT FIRST <--
-    // --> FIX IT FIRST <--
-    // --> FIX IT FIRST <--
+    // --> FIX IT <--
+    // not important
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong  value_1_temp =>
         move |_| {
             // CLEAR
             entry.set_text("");
@@ -287,7 +281,16 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
+// pub fn concat_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+//     value_1.set(value_1.get() + 10.0);
+// }
+
+// fn add_dot(dot_detector: char) {
+
+// }
+
 pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    println!("{}", dot_detector);
     if dot_detector == '.' {
         if num_counter == 0 {
             value_1.set(value_1.get() + num);
@@ -324,12 +327,11 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
         SUBTRACT => "-",
         MULTIPLY => "\u{00D7}",
         DIVIDE =>   "\u{00F7}",
-        _=> "_"
+        _=>         "Error"
     };
 
     let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
-    // println!("operation_string: {}", operation_string);
-    // dbg!("{:?}", &result);
+
     match current_operation {
         ADD =>      { value_1.set(value_1.get() + value_2); },
         SUBTRACT => { value_1.set(value_1.get() - value_2); },
@@ -344,6 +346,6 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
         result.push_str( &value_1.get().to_string() );
         result = format!("{}{} ", operation_string, result)
     }
-    // dbg!("{:?}", &result);
+
     result
 }
