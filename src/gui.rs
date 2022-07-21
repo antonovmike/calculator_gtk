@@ -272,6 +272,7 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
         move |_| {
             // CLEAR
+            entry.set_text("CHECK");
         }));
 
     // --> ATTACH OPERATORS TO GRID
