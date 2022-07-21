@@ -32,8 +32,8 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let value_1_temp: Rc<Cell<char>> = Rc::new(Cell::new('_'));
-    // let value_2_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
+    let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
     let previous_operation = Rc::new(Cell::new(NONE));
     let current_operation = Rc::new(Cell::new(NONE));
@@ -59,63 +59,73 @@ pub fn build_ui(application: &gtk::Application) {
 
     // --> CONNECT FUNCTION
     button_1.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 1.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
     button_2.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 2.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 2.0);
             entry.insert_text("2", &mut -1);
         }));
     button_3.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 3.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 3.0);
             entry.insert_text("3", &mut -1);
         }));
     button_4.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 4.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 4.0);
             entry.insert_text("4", &mut -1);
         }));
     button_5.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 5.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 5.0);
             entry.insert_text("5", &mut -1);
         }));
     button_6.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 6.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 6.0);
             entry.insert_text("6", &mut -1);
         }));
     button_7.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 7.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 7.0);
             entry.insert_text("7", &mut -1);
         }));
     button_8.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 8.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 8.0);
             entry.insert_text("8", &mut -1);
         }));
     button_9.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 9.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 9.0);
             entry.insert_text("9", &mut -1);
         }));
     button_0.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+        @strong dot_detector, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), value_1_temp.get(), &value_1, &value_2, 0.0);
+            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
         }));
 
@@ -244,7 +254,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> FIX IT <--
     // --> FIX IT <--
     dot_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
         move |_| {
             // Add the '.' to value
             // !!! Turns '.' into 0. Example: "0.05" would turn into 5, "1.01" - into 105
@@ -267,8 +277,8 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
-pub fn set_value(num_counter: i32, value_1_temp: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if value_1_temp == '.' {
+pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    if dot_detector == '.' {
         if num_counter == 0 {
             value_1.set(value_1.get() + num);
         }
