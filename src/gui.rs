@@ -312,7 +312,7 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
         SUBTRACT => "-",
         MULTIPLY => "\u{00D7}",
         DIVIDE =>   "\u{00F7}",
-        _=> "_"
+        _=>         "Error"
     };
 
     let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
@@ -331,6 +331,6 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
         result.push_str( &value_1.get().to_string() );
         result = format!("{}{} ", operation_string, result)
     }
-    // dbg!("{:?}", &result);
+    
     result
 }
