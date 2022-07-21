@@ -265,6 +265,15 @@ pub fn build_ui(application: &gtk::Application) {
             entry.insert_text(".", &mut -1); // Doesn't work yet
         }));
 
+    // --> FIX IT FIRST <--
+    // --> FIX IT FIRST <--
+    // --> FIX IT FIRST <--
+    clear_button.connect_clicked(clone!(
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
+        move |_| {
+            // CLEAR
+        }));
+
     // --> ATTACH OPERATORS TO GRID
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
