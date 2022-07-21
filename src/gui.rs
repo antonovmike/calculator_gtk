@@ -266,6 +266,7 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong  value_1_temp =>
         move |_| {
             // CLEAR
+            num_counter.set(0);
             entry.set_text("");
         }));
 
