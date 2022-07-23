@@ -35,6 +35,7 @@ pub fn build_ui(application: &gtk::Application) {
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
+    let dot_counter = Rc::new(Cell::new(0)); // INCREASES EACH TIME dot_button PRESSED
     let previous_operation = Rc::new(Cell::new(NONE));
     let current_operation = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
@@ -60,11 +61,12 @@ pub fn build_ui(application: &gtk::Application) {
     // --> CONNECT FUNCTION
     button_1.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 1.0);
+            set_value_2(num_counter.get(), dot_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
+        
     button_2.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
         @strong dot_detector, @strong  value_1_temp =>
@@ -253,9 +255,20 @@ pub fn build_ui(application: &gtk::Application) {
     // --> FIX IT <--
     // --> FIX IT <--
     dot_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            dot_detector.set('.'); // Doesn't work yet
+            dot_counter.set(dot_counter.get() + 1);
+            if dot_counter.get() == 1 {
+                println!("dot_counter inside dot button IF: {}", dot_counter.get());
+                dot_counter.set(1);
+                set_value_2(num_counter.get(), 1, &value_1, &value_2, 1.0);
+            } else if dot_counter.get() == 2 {
+                println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
+                set_value_2(num_counter.get(), 2, &value_1, &value_2, 1.0);
+                dot_counter.set(0);
+            } else {
+                dot_counter.set(0);
+            }
             entry.insert_text(".", &mut -1); // Add '.' to entry
         }));
 
@@ -268,6 +281,7 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(0);
             value_1.set(0.0);
             value_2.set(0.0);
+            // dot_counter.set(0);
             entry.set_text("");
         }));
 
@@ -283,13 +297,33 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
-// pub fn concat_value(num_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-//     value_1.set(value_1.get() + 10.0);
-// }
-
-// fn add_dot(dot_detector: char) {
-
-// }
+pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    if dot_counter == 0 {
+        println!("dot_counter SET VALUE IF: {}", dot_counter);
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num);
+        }   
+    } else if dot_counter == 1 {
+        println!("dot_counter SET VALUE ELSE IF: {}", dot_counter);
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num / 10.0);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num / 10.0);
+        }
+    } else {
+        println!("dot_counter SET VALUE ELSE: {}", dot_counter);
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num / 10.0);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num / 10.0);
+        }
+    }
+}
 
 pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
     if dot_detector == '.' {
@@ -308,7 +342,6 @@ pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, 
             value_2.set(value_2.get() * 10.0 + num);
         }
     }
-
 }
 
 pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
