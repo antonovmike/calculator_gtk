@@ -30,8 +30,13 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    // let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    // let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    // let value_1: Rc<Cell<String>> = Rc::new(Cell::new(String::new()));
+    // let value_2: Rc<Cell<String>> = Rc::new(Cell::new(String::new()));
+    let value_1: Rc<Cell<String>> = Rc::new(Cell::new("0.0".to_owned()));
+    let value_2: Rc<Cell<String>> = Rc::new(Cell::new("0.0".to_owned()));
+
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
@@ -297,7 +302,7 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
-pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<String>>, value_2: &Rc<Cell<String>>, num: f64) {
     if dot_counter == 0 {
         println!("dot_counter SET VALUE IF: {}", dot_counter);
         if num_counter == 0 {
@@ -325,7 +330,7 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, 
     }
 }
 
-pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<String>>, value_2: &Rc<Cell<String>>, num: f64) {
     if dot_detector == '.' {
         println!("dot_detector: {}", dot_detector);
         if num_counter == 0 {
@@ -344,7 +349,7 @@ pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, 
     }
 }
 
-pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
+pub fn operation(previous_operation: char, value_1: &Rc<Cell<String>>, value_2: f64) {
     match previous_operation {
         ADD      => value_1.set(value_1.get() + value_2),
         SUBTRACT => value_1.set(value_1.get() - value_2),
@@ -354,7 +359,7 @@ pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64
     }
 }
 
-fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
+fn the_result(current_operation: char, value_1: &Rc<Cell<String>>, value_2: f64) -> std::string::String {
     let mut result = String::from(" = ");
     // Add operation symbol to variable
     let operation_symbol = match current_operation {
