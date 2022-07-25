@@ -3,7 +3,6 @@ use std::cell::Cell;
 use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
-use std::ops::{Deref, DerefMut};
 
 pub const ADD: char = '+';
 pub const SUBTRACT: char = '-';
@@ -313,15 +312,19 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, 
             value_2.set(value_2.get() * 10.0 + num);
         }
     } else {
-        let first_string = (value_1.get() / 10.0).to_string();
-        let second_string = (value_2.get() / 10.0).to_string();
-        println!("DOT. 1: {}, 2: {}", first_string, second_string);
+        // let first_string = (value_1.get() / 10.0).to_string();
+        // let second_string = (value_2.get() / 10.0).to_string();
+        // println!("DOT. 1: {}, 2: {}", first_string, second_string);
         
         if dot_counter == 1 {
+            let first_string = (value_1.get() / 10.0).to_string();
+            println!("dot_counter == 1: {}", dot_counter);
             // value_1.set(value_1.get() * 10.0 + num);
             value_1.set( format!("{}{}", first_string, num.to_string()).parse::<f64>().unwrap());
         }
         if dot_counter == 2 {
+            let second_string = (value_2.get() / 10.0).to_string();
+            println!("dot_counter == 2: {}", dot_counter);
             // value_2.set(value_2.get() * 10.0 + num);
             value_2.set( format!("{}{}", second_string, num.to_string()).parse::<f64>().unwrap());
         }
