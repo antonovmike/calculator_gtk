@@ -3,6 +3,7 @@ use std::cell::Cell;
 use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
+use std::ops::{Deref, DerefMut};
 
 pub const ADD: char = '+';
 pub const SUBTRACT: char = '-';
@@ -30,12 +31,8 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    // let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    // let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    // let value_1: Rc<Cell<String>> = Rc::new(Cell::new(String::new()));
-    // let value_2: Rc<Cell<String>> = Rc::new(Cell::new(String::new()));
-    let value_1: Rc<Cell<String>> = Rc::new(Cell::new("0.0".to_owned()));
-    let value_2: Rc<Cell<String>> = Rc::new(Cell::new("0.0".to_owned()));
+    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
 
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
@@ -171,7 +168,7 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
 
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
@@ -189,7 +186,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(SUBTRACT);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
             }
@@ -207,7 +204,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(MULTIPLY);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
@@ -226,7 +223,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(DIVIDE);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
@@ -243,7 +240,7 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(num_counter.get() + 1);
             // After second number has been inserted
             if num_counter.get() == 2 {
-                let result = the_result(current_operation.get(), &value_1, value_2.get());
+                let result = the_result(current_operation.get(), &value_1, &value_2);
 
                 entry.set_text(&result);
                 previous_operation.set(EQUALS);
@@ -302,7 +299,7 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
-pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<String>>, value_2: &Rc<Cell<String>>, num: f64) {
+pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
     if dot_counter == 0 {
         println!("dot_counter SET VALUE IF: {}", dot_counter);
         if num_counter == 0 {
@@ -310,7 +307,7 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<String>
         }
         if num_counter == 1 {
             value_2.set(value_2.get() * 10.0 + num);
-        }   
+        }
     } else if dot_counter == 1 {
         println!("dot_counter SET VALUE ELSE IF: {}", dot_counter);
         if num_counter == 0 {
@@ -330,36 +327,26 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<String>
     }
 }
 
-pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<String>>, value_2: &Rc<Cell<String>>, num: f64) {
-    if dot_detector == '.' {
-        println!("dot_detector: {}", dot_detector);
-        if num_counter == 0 {
-            value_1.set(value_1.get() + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() + num);
-        }        
-    } else {
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num);
-        }
+pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    if num_counter == 0 {
+        value_1.set(value_1.get() * 10.0 + num);
+    }
+    if num_counter == 1 {
+        value_2.set(value_2.get() * 10.0 + num);
     }
 }
 
-pub fn operation(previous_operation: char, value_1: &Rc<Cell<String>>, value_2: f64) {
+pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) {
     match previous_operation {
-        ADD      => value_1.set(value_1.get() + value_2),
-        SUBTRACT => value_1.set(value_1.get() - value_2),
-        MULTIPLY => value_1.set(value_1.get() * value_2),
-        DIVIDE   => value_1.set(value_1.get() / value_2),
+        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
+        SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
+        MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
+        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
         _=> ()
     }
 }
 
-fn the_result(current_operation: char, value_1: &Rc<Cell<String>>, value_2: f64) -> std::string::String {
+fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) -> std::string::String {
     let mut result = String::from(" = ");
     // Add operation symbol to variable
     let operation_symbol = match current_operation {
@@ -370,16 +357,16 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<String>>, value_2: f64)
         _=>         "Error"
     };
 
-    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
+    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2.get());
 
     match current_operation {
-        ADD =>      { value_1.set(value_1.get() + value_2); },
-        SUBTRACT => { value_1.set(value_1.get() - value_2); },
-        MULTIPLY => { value_1.set(value_1.get() * value_2); },
-        DIVIDE =>   { value_1.set(value_1.get() / value_2); },
+        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
+        SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
+        MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
+        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
         _=> ()
     }
-    if current_operation == DIVIDE && value_2 == 0.0 {
+    if current_operation == DIVIDE && value_2.get() == 0.0 {
         result =  String::from("Error: divide by 0");
     }
     else {
