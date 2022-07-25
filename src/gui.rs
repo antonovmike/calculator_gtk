@@ -299,35 +299,24 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
+// RC to string, concatenate, string to f64
 pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if dot_counter == 0 {
-        println!("dot_counter SET VALUE IF: {}", dot_counter);
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num);
-        }
-    } else if dot_counter == 1 {
-        println!("dot_counter SET VALUE ELSE IF: {}", dot_counter);
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num / 10.0);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num / 10.0);
-        }
-    } else {
-        println!("dot_counter SET VALUE ELSE: {}", dot_counter);
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num / 10.0);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num / 10.0);
-        }
+    let first_string = value_1.get().to_string();
+    let my_int_2 = first_string.parse::<f64>().unwrap();
+    println!("first_string {}", first_string);
+    println!("my_int_2 {}", my_int_2);
+    // No dot
+    if num_counter == 0 {
+        value_1.set(value_1.get() * 10.0 + num/10.0);
+        println!("first_string {}", first_string);
+        println!("my_int_2 {}", my_int_2);
+    }
+    if num_counter == 1 {
+        value_2.set(value_2.get() * 10.0 + num);
     }
 }
 
-pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+pub fn set_value(num_counter: i32, _dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
     if num_counter == 0 {
         value_1.set(value_1.get() * 10.0 + num);
     }
