@@ -301,18 +301,30 @@ pub fn build_ui(application: &gtk::Application) {
 
 // RC to string, concatenate, string to f64
 pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    let first_string = value_1.get().to_string();
-    let my_int_2 = first_string.parse::<f64>().unwrap();
-    println!("first_string {}", first_string);
-    println!("my_int_2 {}", my_int_2);
-    // No dot
-    if num_counter == 0 {
-        value_1.set(value_1.get() * 10.0 + num/10.0);
-        println!("first_string {}", first_string);
-        println!("my_int_2 {}", my_int_2);
-    }
-    if num_counter == 1 {
-        value_2.set(value_2.get() * 10.0 + num);
+    // let first_string = value_1.get().to_string();
+    // let my_int_2 = first_string.parse::<f64>().unwrap();
+    
+    if dot_counter == 0 {
+        // NO DOT
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num);
+        }
+    } else {
+        let first_string = (value_1.get() / 10.0).to_string();
+        let second_string = (value_2.get() / 10.0).to_string();
+        println!("DOT. 1: {}, 2: {}", first_string, second_string);
+        
+        if dot_counter == 1 {
+            // value_1.set(value_1.get() * 10.0 + num);
+            value_1.set( format!("{}{}", first_string, num.to_string()).parse::<f64>().unwrap());
+        }
+        if dot_counter == 2 {
+            // value_2.set(value_2.get() * 10.0 + num);
+            value_2.set( format!("{}{}", second_string, num.to_string()).parse::<f64>().unwrap());
+        }
     }
 }
 
