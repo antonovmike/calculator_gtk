@@ -64,71 +64,71 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
         @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value_2(num_counter.get(), dot_counter.get(), &value_1, &value_2, 1.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
         
     button_2.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 2.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 2.0);
             entry.insert_text("2", &mut -1);
         }));
     button_3.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 3.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 3.0);
             entry.insert_text("3", &mut -1);
         }));
     button_4.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 4.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 4.0);
             entry.insert_text("4", &mut -1);
         }));
     button_5.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 5.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 5.0);
             entry.insert_text("5", &mut -1);
         }));
     button_6.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 6.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 6.0);
             entry.insert_text("6", &mut -1);
         }));
     button_7.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 7.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 7.0);
             entry.insert_text("7", &mut -1);
         }));
     button_8.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 8.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 8.0);
             entry.insert_text("8", &mut -1);
         }));
     button_9.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 9.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 9.0);
             entry.insert_text("9", &mut -1);
         }));
     button_0.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 0.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
         }));
 
@@ -263,11 +263,11 @@ pub fn build_ui(application: &gtk::Application) {
             if dot_counter.get() == 0 {
                 println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
-                set_value_2(num_counter.get(), 1, &value_1, &value_2, 0.0);
+                set_value(num_counter.get(), 1, &value_1, &value_2, 0.0);
             } else if dot_counter.get() == 1 {
                 println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
-                set_value_2(num_counter.get(), 2, &value_1, &value_2, 0.0);
+                set_value(num_counter.get(), 2, &value_1, &value_2, 0.0);
             } else {
                 dot_counter.set(0);
             }
@@ -298,7 +298,37 @@ pub fn build_ui(application: &gtk::Application) {
 }
 
 // RC to string, concatenate, string to f64
-pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+// pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+//     if dot_counter == 0 {
+//         println!("-> dot_counter == 0");
+//         if num_counter == 0 {
+//             value_1.set(value_1.get() * 10.0 + num);
+//         }
+//         if num_counter == 1 {
+//             value_2.set(value_2.get() * 10.0 + num);
+//         }
+//     }
+//     if dot_counter == 1 {
+//         println!("-> dot_counter == 1");
+//         if num_counter == 0 {
+//             value_1.set(value_1.get() + num / 10.0);
+//         }
+//         if num_counter == 1 {
+//             value_2.set(value_2.get() * 10.0 + num);
+//         }
+//     }
+//     if dot_counter == 2 {
+//         println!("-> dot_counter == 2");
+//         if num_counter == 0 {
+//             value_1.set(value_1.get() * 10.0 + num);
+//         }
+//         if num_counter == 1 {
+//             value_2.set(value_2.get() + num / 10.0);
+//         }
+//     }
+// }
+
+pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
     if dot_counter == 0 {
         println!("-> dot_counter == 0");
         if num_counter == 0 {
@@ -311,10 +341,6 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, 
     if dot_counter == 1 {
         println!("-> dot_counter == 1");
         if num_counter == 0 {
-            // value_1.set(value_1.get() * 10.0 + num); // 1.1 -> 101;  1.0 + 1 = 101;  1+1=2
-            // value_1.set(value_1.get() * 10.0);       // 1.1 -> 100;  1.0 + 1 = 101;  1+1=2
-            // value_1.set(value_1.get());              // 1.1 -> 1;    1.0 + 1 = 11;   1+1=2
-            // value_1.set(value_1.get() + num);        // 1.1 -> 2;    1.0 + 1 = 11;   1+1=2
             value_1.set(value_1.get() + num / 10.0);
         }
         if num_counter == 1 {
@@ -329,15 +355,6 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, 
         if num_counter == 1 {
             value_2.set(value_2.get() + num / 10.0);
         }
-    }
-}
-
-pub fn set_value(num_counter: i32, _dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if num_counter == 0 {
-        value_1.set(value_1.get() * 10.0 + num);
-    }
-    if num_counter == 1 {
-        value_2.set(value_2.get() * 10.0 + num);
     }
 }
 
