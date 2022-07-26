@@ -266,6 +266,7 @@ pub fn build_ui(application: &gtk::Application) {
                 set_value_2(num_counter.get(), 1, &value_1, &value_2, 0.0);
             } else if dot_counter.get() == 1 {
                 println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
+                dot_counter.set(dot_counter.get() + 1);
                 set_value_2(num_counter.get(), 2, &value_1, &value_2, 0.0);
             } else {
                 dot_counter.set(0);
@@ -326,7 +327,7 @@ pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, 
             value_1.set(value_1.get() * 10.0 + num);
         }
         if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num);
+            value_2.set(value_2.get() + num / 10.0);
         }
     }
 }
