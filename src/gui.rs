@@ -258,14 +258,14 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            dot_counter.set(dot_counter.get() + 1);
-            if dot_counter.get() == 1 {
+            // dot_counter.set(dot_counter.get() + 1);
+            if dot_counter.get() == 0 {
                 println!("dot_counter inside dot button IF: {}", dot_counter.get());
-                dot_counter.set(1);
-                set_value_2(num_counter.get(), 1, &value_1, &value_2, 1.0);
-            } else if dot_counter.get() == 2 {
+                dot_counter.set(dot_counter.get() + 1);
+                set_value_2(num_counter.get(), 1, &value_1, &value_2, 0.0);
+            } else if dot_counter.get() == 1 {
                 println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
-                set_value_2(num_counter.get(), 2, &value_1, &value_2, 1.0);
+                set_value_2(num_counter.get(), 2, &value_1, &value_2, 0.0);
                 dot_counter.set(0);
             } else {
                 dot_counter.set(0);
@@ -276,7 +276,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> CHECK IT <--
     // not important
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong  value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong value_1_temp =>
         move |_| {
             // CLEAR
             num_counter.set(0);
@@ -300,33 +300,35 @@ pub fn build_ui(application: &gtk::Application) {
 
 // RC to string, concatenate, string to f64
 pub fn set_value_2(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    // let first_string = value_1.get().to_string();
-    // let my_int_2 = first_string.parse::<f64>().unwrap();
-    
+    println!("Start---------------");
+    println!("num_counter = {}", num_counter);
+    println!("dot_counter = {}", dot_counter);
+
     if dot_counter == 0 {
-        // NO DOT
+        println!("-> dot_counter == 0");
         if num_counter == 0 {
             value_1.set(value_1.get() * 10.0 + num);
         }
         if num_counter == 1 {
             value_2.set(value_2.get() * 10.0 + num);
         }
-    } else {
-        // let first_string = (value_1.get() / 10.0).to_string();
-        // let second_string = (value_2.get() / 10.0).to_string();
-        // println!("DOT. 1: {}, 2: {}", first_string, second_string);
-        
-        if dot_counter == 1 {
-            let first_string = (value_1.get() / 10.0).to_string();
-            println!("dot_counter == 1: {}", dot_counter);
-            // value_1.set(value_1.get() * 10.0 + num);
-            value_1.set( format!("{}{}", first_string, num.to_string()).parse::<f64>().unwrap());
+    }
+    if dot_counter == 1 {
+        println!("-> dot_counter == 1");
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num);
         }
-        if dot_counter == 2 {
-            let second_string = (value_2.get() / 10.0).to_string();
-            println!("dot_counter == 2: {}", dot_counter);
-            // value_2.set(value_2.get() * 10.0 + num);
-            value_2.set( format!("{}{}", second_string, num.to_string()).parse::<f64>().unwrap());
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num);
+        }
+    }
+    if dot_counter == 2 {
+        println!("-> dot_counter == 2");
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num);
         }
     }
 }
