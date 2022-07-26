@@ -32,9 +32,11 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
+    let dot_counter = Rc::new(Cell::new(0)); // INCREASES EACH TIME dot_button PRESSED
     let previous_operation = Rc::new(Cell::new(NONE));
     let current_operation = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
@@ -60,72 +62,73 @@ pub fn build_ui(application: &gtk::Application) {
     // --> CONNECT FUNCTION
     button_1.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 1.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 1.0);
             entry.insert_text("1", &mut -1);
         }));
+        
     button_2.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 2.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 2.0);
             entry.insert_text("2", &mut -1);
         }));
     button_3.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 3.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 3.0);
             entry.insert_text("3", &mut -1);
         }));
     button_4.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 4.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 4.0);
             entry.insert_text("4", &mut -1);
         }));
     button_5.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 5.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 5.0);
             entry.insert_text("5", &mut -1);
         }));
     button_6.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 6.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 6.0);
             entry.insert_text("6", &mut -1);
         }));
     button_7.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 7.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 7.0);
             entry.insert_text("7", &mut -1);
         }));
     button_8.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 8.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 8.0);
             entry.insert_text("8", &mut -1);
         }));
     button_9.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 9.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 9.0);
             entry.insert_text("9", &mut -1);
         }));
     button_0.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_detector, @strong  value_1_temp =>
+        @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_detector.get(), &value_1, &value_2, 0.0);
+            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
         }));
 
@@ -147,6 +150,7 @@ pub fn build_ui(application: &gtk::Application) {
     let mult_button  = gtk::Button::with_label("\u{00D7}");
     let div_button   = gtk::Button::with_label("\u{00F7}");
     let equals_bttn  = gtk::Button::with_label("=");
+    // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
 
@@ -163,7 +167,7 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
 
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
@@ -181,7 +185,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(SUBTRACT);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
             }
@@ -199,7 +203,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(MULTIPLY);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
@@ -218,7 +222,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(DIVIDE);
-                operation(previous_operation.get(), &value_1, value_2.get());
+                operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
@@ -229,41 +233,56 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry, @strong dot_counter =>
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
             // After second number has been inserted
             if num_counter.get() == 2 {
-                let result = the_result(current_operation.get(), &value_1, value_2.get());
+                let result = the_result(current_operation.get(), &value_1, &value_2);
 
                 entry.set_text(&result);
                 previous_operation.set(EQUALS);
 
                 // Reset variables
                 num_counter.set(0);
+                dot_counter.set(0);
                 value_1.set(0.0);
                 value_2.set(0.0);
                 current_operation.set(NONE);
             }
         }));
 
-    // --> FIX IT <--
-    // --> FIX IT <--
-    // --> FIX IT <--
     dot_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            entry.insert_text(".", &mut -1); // Doesn't work yet
+            // dot_counter.set(dot_counter.get() + 1);
+            if dot_counter.get() == 0 {
+                println!("dot_counter inside dot button IF: {}", dot_counter.get());
+                dot_counter.set(dot_counter.get() + 1);
+                set_value(num_counter.get(), 1, &value_1, &value_2, 0.0);
+            } else if dot_counter.get() == 1 {
+                println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
+                dot_counter.set(dot_counter.get() + 1);
+                set_value(num_counter.get(), 2, &value_1, &value_2, 0.0);
+            } else {
+                dot_counter.set(0);
+            }
+            entry.insert_text(".", &mut -1); // Add '.' to entry
         }));
 
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong value_1_temp =>
         move |_| {
+            // CLEAR
+            num_counter.set(0);
+            value_1.set(0.0);
+            value_2.set(0.0);
+            dot_counter.set(0);
             entry.set_text("");
         }));
 
-    // --> ATTACH OPERATORS TO GRID
+    // --> ATTACH OPERATORS AND EXTRA BUTTONS TO GRID
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);
@@ -275,15 +294,9 @@ pub fn build_ui(application: &gtk::Application) {
     window.show_all();
 }
 
-pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if dot_detector == '.' {
-        if num_counter == 0 {
-            value_1.set(value_1.get() + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() + num);
-        }        
-    } else {
+pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
+    if dot_counter == 0 {
+        println!("-> dot_counter == 0");
         if num_counter == 0 {
             value_1.set(value_1.get() * 10.0 + num);
         }
@@ -291,20 +304,37 @@ pub fn set_value(num_counter: i32, dot_detector: char, value_1: &Rc<Cell<f64>>, 
             value_2.set(value_2.get() * 10.0 + num);
         }
     }
-
+    if dot_counter == 1 {
+        println!("-> dot_counter == 1");
+        if num_counter == 0 {
+            value_1.set(value_1.get() + num / 10.0);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() * 10.0 + num);
+        }
+    }
+    if dot_counter == 2 {
+        println!("-> dot_counter == 2");
+        if num_counter == 0 {
+            value_1.set(value_1.get() * 10.0 + num);
+        }
+        if num_counter == 1 {
+            value_2.set(value_2.get() + num / 10.0);
+        }
+    }
 }
 
-pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) {
+pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) {
     match previous_operation {
-        ADD      => value_1.set(value_1.get() + value_2),
-        SUBTRACT => value_1.set(value_1.get() - value_2),
-        MULTIPLY => value_1.set(value_1.get() * value_2),
-        DIVIDE   => value_1.set(value_1.get() / value_2),
+        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
+        SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
+        MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
+        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
         _=> ()
     }
 }
 
-fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) -> std::string::String {
+fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) -> std::string::String {
     let mut result = String::from(" = ");
     // Add operation symbol to variable
     let operation_symbol = match current_operation {
@@ -315,22 +345,22 @@ fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: f64) ->
         _=>         "Error"
     };
 
-    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2);
-    
+    let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2.get());
+
     match current_operation {
-        ADD =>      { value_1.set(value_1.get() + value_2); },
-        SUBTRACT => { value_1.set(value_1.get() - value_2); },
-        MULTIPLY => { value_1.set(value_1.get() * value_2); },
-        DIVIDE =>   { value_1.set(value_1.get() / value_2); },
+        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
+        SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
+        MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
+        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
         _=> ()
     }
-    if current_operation == DIVIDE && value_2 == 0.0 {
+    if current_operation == DIVIDE && value_2.get() == 0.0 {
         result =  String::from("Error: divide by 0");
     }
     else {
         result.push_str( &value_1.get().to_string() );
         result = format!("{}{} ", operation_string, result)
     }
-    
+
     result
 }

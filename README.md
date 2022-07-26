@@ -4,6 +4,10 @@
 
 --------------------
 
+Сalculator only counts integers and decimals
+
+--------------------
+
 ADD:
 
 Listen for keyboard events
@@ -12,7 +16,7 @@ Listen for keyboard events
 
 FIX:
 
--*/ operators
+'.' button. Try to add dot_detector checker to each numeric button function. If it is true - add each digit after '.' pressed to value_1_temp
 
 make Entry scrollable!
 
@@ -22,6 +26,6 @@ make Entry scrollable!
 
 ISSUES:
 
-How to add digitafter '.'?
+How to add digits after '.'?
 
 --------------------
