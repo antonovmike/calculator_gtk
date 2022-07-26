@@ -4,6 +4,10 @@
 
 --------------------
 
+Сalculator only counts integers and decimals
+
+--------------------
+
 ADD:
 
 Listen for keyboard events
@@ -22,6 +26,6 @@ make Entry scrollable!
 
 ISSUES:
 
-How to add digitafter '.'?
+How to add digits after '.'?
 
 --------------------
