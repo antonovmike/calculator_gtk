@@ -254,8 +254,6 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     // --> FIX IT <--
-    // --> FIX IT <--
-    // --> FIX IT <--
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
@@ -298,8 +296,6 @@ pub fn build_ui(application: &gtk::Application) {
 }
 
 pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    let mut val_one: String = value_1.get().to_string();
-    let mut val_two: String = value_1.get().to_string();
     if dot_counter == 0 {
         println!("-> dot_counter == 0");
         if num_counter == 0 {
@@ -312,10 +308,7 @@ pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, va
     if dot_counter == 1 {
         println!("-> dot_counter == 1");
         if num_counter == 0 {
-            val_one = format!("{}{}", val_one, (value_1.get() + num / 10.0).to_string() );
-            let convert = val_one.parse::<f64>().unwrap_or(0.0).to_owned();
-            value_1.set(convert);
-            // value_1.set(value_1.get() + num / 10.0);
+            value_1.set(value_1.get() + num / 10.0);
         }
         if num_counter == 1 {
             value_2.set(value_2.get() * 10.0 + num);
