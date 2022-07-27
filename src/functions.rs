@@ -1,10 +1,7 @@
 use std::cell::Cell;
 use std::rc::Rc;
 
-pub const ADD: char = '+';
-pub const SUBTRACT: char = '-';
-pub const MULTIPLY: char = '*';
-pub const DIVIDE: char = '/';
+use crate::constants::*;
 
 pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
     if dot_counter == 0 {

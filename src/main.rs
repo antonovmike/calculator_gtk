@@ -2,6 +2,7 @@ use gtk::prelude::*;
 
 mod gui;
 mod functions;
+mod constants;
 
 fn main() {
     let application = gtk::Application::new(
