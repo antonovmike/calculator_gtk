@@ -5,13 +5,7 @@ use gtk::prelude::*;
 use glib_macros::clone;
 
 use crate::functions::{operation, the_result, set_value};
-
-pub const ADD: char = '+';
-pub const SUBTRACT: char = '-';
-pub const MULTIPLY: char = '*';
-pub const DIVIDE: char = '/';
-pub const EQUALS: char = '=';
-pub const NONE: char = '0';
+use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
