@@ -1,8 +1,9 @@
 use gtk::prelude::*;
 
-pub use gdk::Screen;
+pub use gdk::Display;
 pub use gtk::{CssProvider, StyleContext};
 pub use crate::gui::{load_css};
+// pub use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
 
 mod gui;
 mod functions;

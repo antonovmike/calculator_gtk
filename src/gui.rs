@@ -5,16 +5,19 @@ use gtk::prelude::*;
 use glib_macros::clone;
 
 use gdk::Screen;
-use gtk::{CssProvider, StyleContext};
+use gdk::Display;
+use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
 
 use crate::functions::{operation, the_result, set_value};
 use crate::constants::*;
 
+// https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/main.rs
 pub fn load_css() {
-    // Loads CSS file, connect it to the provider
+    // Load the CSS file and add it to the provider
     let provider = CssProvider::new();
     provider.load_from_data(include_bytes!("style.css"));
 
+    // Add the provider to the default screen
     StyleContext::add_provider_for_screen(
         &Screen::default().expect("Could not connect to a display."),
         &provider,
