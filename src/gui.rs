@@ -11,7 +11,7 @@ use crate::functions::{operation, the_result, set_value};
 use crate::constants::*;
 
 pub fn load_css() {
-    // Load CSS file and add it to the provider
+    // Loads CSS file, connect it to the provider
     let provider = CssProvider::new();
     provider.load_from_data(include_bytes!("style.css"));
 
@@ -164,6 +164,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
+    // clear_button.add_css_class("button");
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
