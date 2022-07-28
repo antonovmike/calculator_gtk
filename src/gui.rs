@@ -4,8 +4,23 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
+use gdk::Screen;
+use gtk::{CssProvider, StyleContext};
+
 use crate::functions::{operation, the_result, set_value};
 use crate::constants::*;
+
+pub fn load_css() {
+    // Load CSS file and add it to the provider
+    let provider = CssProvider::new();
+    provider.load_from_data(include_bytes!("style.css"));
+
+    StyleContext::add_provider_for_screen(
+        &Screen::default().expect("Could not connect to a display."),
+        &provider,
+        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
+}
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
