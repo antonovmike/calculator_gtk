@@ -60,12 +60,13 @@ pub fn build_ui(application: &gtk::Application) {
         .build();
     grid.attach(&entry, 0, 0, 3 ,1);
 
+    // NUM BUTTONS
     let mut iterator = 1;
     let mut button_value = 1.0;
-    
     while iterator < 10 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
+        let mut raw = 1;
 
         button.connect_clicked(clone!(
             @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
@@ -82,47 +83,31 @@ pub fn build_ui(application: &gtk::Application) {
         } else if iterator % 3 == 0 {
             column = 2;
         }
-        if iterator == 1 {
-            grid.attach(&button, column, 1, 1, 1);
-        } else if iterator == 2 {
-            grid.attach(&button, column, 1, 1, 1);
-        } else if iterator == 3 {
-            grid.attach(&button, column, 1, 1, 1);
-        } else if iterator == 4 {
-            grid.attach(&button, column, 2, 1, 1);
-        } else if iterator == 5 {
-            grid.attach(&button, column, 2, 1, 1);
-        } else if iterator == 6 {
-            grid.attach(&button, column, 2, 1, 1);
-        } else if iterator == 7 {
-            grid.attach(&button, column, 3, 1, 1);
-        } else if iterator == 8 {
-            grid.attach(&button, column, 3, 1, 1);
-        } else if iterator == 9 {
-            grid.attach(&button, column, 3, 1, 1);
-        }
+        if iterator > 3 && iterator < 7 { raw = 2 }
+        else if iterator >= 7 && iterator <= 9 { raw = 3 }
+
+        grid.attach(&button, column, raw, 1, 1);
+
         iterator += 1;
         button_value += 1.0;
     }
     
     let button_0 = gtk::Button::with_label("0");
-
     button_0.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
         @strong dot_counter, @strong  value_1_temp =>
         move |_| {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
+            println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
-
-    // --> ATTACH NUM BUTTONS TO GRID
     grid.attach(&button_0, 1, 4, 1, 1);
 
     // --> OPERATORS
     let plus_button  = gtk::Button::with_label("+");
     let minus_button = gtk::Button::with_label("-");
-    let mult_button  = gtk::Button::with_label("\u{00D7}");
-    let div_button   = gtk::Button::with_label("\u{00F7}");
+    let mult_button  = gtk::Button::with_label("×");
+    let div_button   = gtk::Button::with_label("÷");
     let equals_bttn  = gtk::Button::with_label("=");
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
