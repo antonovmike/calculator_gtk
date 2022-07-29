@@ -46,7 +46,6 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
@@ -71,7 +70,7 @@ pub fn build_ui(application: &gtk::Application) {
 
         button.connect_clicked(clone!(
             @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-            @strong dot_counter, @strong  value_1_temp =>
+            @strong dot_counter, @strong value_1_temp =>
             move |_| {
                 set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
@@ -113,7 +112,6 @@ pub fn build_ui(application: &gtk::Application) {
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
 
-    // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
@@ -129,7 +127,7 @@ pub fn build_ui(application: &gtk::Application) {
                 operation(previous_operation.get(), &value_1, &value_2);
 
                 num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0); // Reset to 0
+                value_2.set(0.0);
             }
             else {
                 current_operation.set(ADD);
@@ -146,7 +144,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(SUBTRACT);
                 operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0); // Reset to 0
+                value_2.set(0.0);
             }
             else {
                 current_operation.set(SUBTRACT);
@@ -203,7 +201,6 @@ pub fn build_ui(application: &gtk::Application) {
                 entry.set_text(&result);
                 previous_operation.set(EQUALS);
 
-                // Reset variables
                 num_counter.set(0);
                 dot_counter.set(0);
                 value_1.set(0.0);
@@ -215,13 +212,10 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            // dot_counter.set(dot_counter.get() + 1);
             if dot_counter.get() == 0 {
-                println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
                 set_value(num_counter.get(), 1, &value_1, &value_2, 0.0);
             } else if dot_counter.get() == 1 {
-                println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
                 set_value(num_counter.get(), 2, &value_1, &value_2, 0.0);
             } else {
@@ -233,7 +227,6 @@ pub fn build_ui(application: &gtk::Application) {
     clear_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong value_1_temp =>
         move |_| {
-            // CLEAR
             num_counter.set(0);
             value_1.set(0.0);
             value_2.set(0.0);
