@@ -61,83 +61,39 @@ pub fn build_ui(application: &gtk::Application) {
         .build();
     grid.attach(&entry, 0, 0, 3 ,1);
 
-    // --> CREATE NUM BUTTONS
-    let button_1 = gtk::Button::with_label("1");
-    let button_2 = gtk::Button::with_label("2");
-    let button_3 = gtk::Button::with_label("3");
-    let button_4 = gtk::Button::with_label("4");
-    let button_5 = gtk::Button::with_label("5");
-    let button_6 = gtk::Button::with_label("6");
-    let button_7 = gtk::Button::with_label("7");
-    let button_8 = gtk::Button::with_label("8");
-    let button_9 = gtk::Button::with_label("9");
-    let button_0 = gtk::Button::with_label("0");
+    // NUM BUTTONS
+    let mut iterator = 1;
+    let mut button_value = 1.0;
+    while iterator < 10 {
+        let button = gtk::Button::with_label(&iterator.to_string());
+        let mut column = 0;
+        let mut raw = 1;
 
-    // --> CONNECT FUNCTION
-    button_1.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 1.0);
-            entry.insert_text("1", &mut -1);
-        }));
+        button.connect_clicked(clone!(
+            @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
+            @strong dot_counter, @strong  value_1_temp =>
+            move |_| {
+                set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
+                entry.insert_text(&iterator.to_string(), &mut -1);
+            }));
         
-    button_2.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 2.0);
-            entry.insert_text("2", &mut -1);
-        }));
-    button_3.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 3.0);
-            entry.insert_text("3", &mut -1);
-        }));
-    button_4.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 4.0);
-            entry.insert_text("4", &mut -1);
-        }));
-    button_5.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 5.0);
-            entry.insert_text("5", &mut -1);
-        }));
-    button_6.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 6.0);
-            entry.insert_text("6", &mut -1);
-        }));
-    button_7.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 7.0);
-            entry.insert_text("7", &mut -1);
-        }));
-    button_8.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 8.0);
-            entry.insert_text("8", &mut -1);
-        }));
-    button_9.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
-        move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 9.0);
-            entry.insert_text("9", &mut -1);
-        }));
+        if iterator % 3 == 1 {
+            column = 0;
+        } else if iterator % 3 == 2 {
+            column = 1;
+        } else if iterator % 3 == 0 {
+            column = 2;
+        }
+        if iterator > 3 && iterator < 7 { raw = 2 }
+        else if iterator >= 7 && iterator <= 9 { raw = 3 }
+
+        grid.attach(&button, column, raw, 1, 1);
+
+        iterator += 1;
+        button_value += 1.0;
+    }
+    
+    let button_0 = gtk::Button::with_label("0");
     button_0.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
         @strong dot_counter, @strong  value_1_temp =>
@@ -145,17 +101,6 @@ pub fn build_ui(application: &gtk::Application) {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
         }));
-
-    // --> ATTACH NUM BUTTONS TO GRID
-    grid.attach(&button_1, 0, 1, 1, 1);
-    grid.attach(&button_2, 1, 1, 1, 1);
-    grid.attach(&button_3, 2, 1, 1, 1);
-    grid.attach(&button_4, 0, 2, 1, 1);
-    grid.attach(&button_5, 1, 2, 1, 1);
-    grid.attach(&button_6, 2, 2, 1, 1);
-    grid.attach(&button_7, 0, 3, 1, 1);
-    grid.attach(&button_8, 1, 3, 1, 1);
-    grid.attach(&button_9, 2, 3, 1, 1);
     grid.attach(&button_0, 1, 4, 1, 1);
 
     // --> OPERATORS
