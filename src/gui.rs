@@ -161,8 +161,8 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATORS
     let plus_button  = gtk::Button::with_label("+");
     let minus_button = gtk::Button::with_label("-");
-    let mult_button  = gtk::Button::with_label("\u{00D7}");
-    let div_button   = gtk::Button::with_label("\u{00F7}");
+    let mult_button  = gtk::Button::with_label("×");
+    let div_button   = gtk::Button::with_label("÷");
     let equals_bttn  = gtk::Button::with_label("=");
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
