@@ -61,16 +61,15 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&entry, 0, 0, 3 ,1);
 
     // NUM BUTTONS
-    let mut iterator = 1;
     let mut button_value = 1.0;
-    while iterator < 10 {
+    for iterator in 0..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
         let mut raw = 1;
 
         button.connect_clicked(clone!(
             @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-            @strong dot_counter, @strong value_1_temp =>
+            @strong dot_counter, @strong  value_1_temp =>
             move |_| {
                 set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
@@ -88,7 +87,6 @@ pub fn build_ui(application: &gtk::Application) {
 
         grid.attach(&button, column, raw, 1, 1);
 
-        iterator += 1;
         button_value += 1.0;
     }
     
