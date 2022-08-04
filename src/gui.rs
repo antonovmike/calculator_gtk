@@ -62,7 +62,7 @@ pub fn build_ui(application: &gtk::Application) {
 
     // NUM BUTTONS
     let mut button_value = 1.0;
-    for iterator in 0..=9 {
+    for iterator in 1..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
         let mut raw = 1;
