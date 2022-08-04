@@ -62,7 +62,7 @@ pub fn build_ui(application: &gtk::Application) {
 
     // NUM BUTTONS
     let mut button_value = 1.0;
-    for iterator in 0..=9 {
+    for iterator in 1..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
         let mut raw = 1;
@@ -102,11 +102,11 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&button_0, 1, 4, 1, 1);
 
     // --> OPERATORS
-    let plus_button  = gtk::Button::with_label("+");
-    let minus_button = gtk::Button::with_label("-");
-    let mult_button  = gtk::Button::with_label("×");
-    let div_button   = gtk::Button::with_label("÷");
-    let equals_bttn  = gtk::Button::with_label("=");
+    let plus_button  = gtk::Button::with_label(" + ");
+    let minus_button = gtk::Button::with_label(" - ");
+    let mult_button  = gtk::Button::with_label(" × ");
+    let div_button   = gtk::Button::with_label(" ÷ ");
+    let equals_bttn  = gtk::Button::with_label(" = ");
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
