@@ -47,10 +47,10 @@ pub fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc
     let mut result = String::from(" = ");
     // Add operation symbol to variable
     let operation_symbol = match current_operation {
-        ADD =>      "+",
-        SUBTRACT => "-",
-        MULTIPLY => "\u{00D7}",
-        DIVIDE =>   "\u{00F7}",
+        ADD =>      " + ",
+        SUBTRACT => " - ",
+        MULTIPLY => " \u{00D7} ",
+        DIVIDE =>   " \u{00F7} ",
         _=>         "Error"
     };
 

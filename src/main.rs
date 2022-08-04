@@ -2,7 +2,7 @@ use gtk::prelude::*;
 
 pub use gdk::Display;
 pub use gtk::{CssProvider, StyleContext};
-pub use crate::gui::{load_css};
+// pub use crate::gui::{load_css};
 // pub use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
 
 mod gui;
@@ -15,7 +15,7 @@ fn main() {
         Default::default(),
     );
 
-    application.connect_startup(|_| load_css());
+    // application.connect_startup(|_| load_css());
     application.connect_activate(gui::build_ui);
     application.run();
 }
