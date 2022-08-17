@@ -14,7 +14,7 @@ fn main() {
         Default::default(),
     );
 
-    application.connect_startup(|_| load_css());
+    // application.connect_startup(|_| load_css());
     application.connect_activate(gui::build_ui);
     application.run();
 }
