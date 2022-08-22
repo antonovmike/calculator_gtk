@@ -1,36 +1,17 @@
-#![allow(unused)]
 use gtk::Entry;
 use std::cell::Cell;
 use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use gdk::Screen;
-use gtk::{gdk, CssProvider, StyleContext};
-
-use crate::functions::{operation, the_result, set_value};
+use crate::functions::{the_result, set_value};
 use crate::constants::*;
-
-// https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/main.rs
-pub fn load_css() {
-    // Load the CSS file and add it to the provider
-    let provider = CssProvider::new();
-    provider.load_from_data(include_bytes!("style.css"));
-
-    // Add the provider to the default screen
-    StyleContext::add_provider_for_screen(
-        &Screen::default().expect("Could not connect to a display."),
-        &provider,
-        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-    );
-}
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
     window.set_title("GTK calc");
     window.set_default_size(200, 120);
 
-    // --> CREATE GRID
     let margin = 5;
     let grid = gtk::Grid::builder()
         .margin_start(margin)
@@ -46,6 +27,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+
     let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
     let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
@@ -97,19 +79,22 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
+            println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
     grid.attach(&button_0, 1, 4, 1, 1);
 
     // --> OPERATORS
-    let plus_button  = gtk::Button::with_label("+");
-    let minus_button = gtk::Button::with_label("-");
-    let mult_button  = gtk::Button::with_label("×");
-    let div_button   = gtk::Button::with_label("÷");
-    let equals_bttn  = gtk::Button::with_label("=");
+    let plus_button  = gtk::Button::with_label(" + ");
+    let minus_button = gtk::Button::with_label(" - ");
+    let mult_button  = gtk::Button::with_label(" × ");
+    let div_button   = gtk::Button::with_label(" ÷ ");
+    let equals_bttn  = gtk::Button::with_label(" = ");
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
+    // clear_button.add_css_class("button");
 
+    // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
@@ -122,15 +107,13 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                operation(previous_operation.get(), &value_1, &value_2);
-
                 num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0);
+                value_2.set(0.0); // Reset to 0
             }
             else {
                 current_operation.set(ADD);
             }
-            entry.insert_text("+", &mut -1);
+            entry.insert_text(" + ", &mut -1);
         }));
     minus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
@@ -140,14 +123,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(SUBTRACT);
-                operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0);
+                value_2.set(0.0); // Reset to 0
             }
             else {
                 current_operation.set(SUBTRACT);
             }
-            entry.insert_text("-", &mut -1);
+            entry.insert_text(" - ", &mut -1);
         }));
 
     mult_button.connect_clicked(clone!(
@@ -158,14 +141,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(MULTIPLY);
-                operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
             else {
                 current_operation.set(MULTIPLY);
             }
-            entry.insert_text("\u{00D7}", &mut -1);
+            entry.insert_text(" \u{00D7} ", &mut -1);
         }));
 
     div_button.connect_clicked(clone!(
@@ -177,14 +160,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(DIVIDE);
-                operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
             else {
                 current_operation.set(DIVIDE);
             }
-            entry.insert_text("\u{00F7}", &mut -1);
+            entry.insert_text(" \u{00F7} ", &mut -1);
         }));
 
     equals_bttn.connect_clicked(clone!(
@@ -199,6 +182,7 @@ pub fn build_ui(application: &gtk::Application) {
                 entry.set_text(&result);
                 previous_operation.set(EQUALS);
 
+                // Reset variables
                 num_counter.set(0);
                 dot_counter.set(0);
                 value_1.set(0.0);
@@ -207,13 +191,17 @@ pub fn build_ui(application: &gtk::Application) {
             }
         }));
 
+    // --> FIX IT <--
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
+            // dot_counter.set(dot_counter.get() + 1);
             if dot_counter.get() == 0 {
+                println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
                 set_value(num_counter.get(), 1, &value_1, &value_2, 0.0);
             } else if dot_counter.get() == 1 {
+                println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
                 set_value(num_counter.get(), 2, &value_1, &value_2, 0.0);
             } else {
@@ -225,6 +213,7 @@ pub fn build_ui(application: &gtk::Application) {
     clear_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong value_1_temp =>
         move |_| {
+            // CLEAR
             num_counter.set(0);
             value_1.set(0.0);
             value_2.set(0.0);
