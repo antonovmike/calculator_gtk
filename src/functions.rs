@@ -37,21 +37,21 @@ pub fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc
     let mut result = String::from(" = ");
     // Add operation symbol to variable
     let operation_symbol = match current_operation {
-        ADD =>      " + ",
+        ADD      => " + ",
         SUBTRACT => " - ",
         MULTIPLY => " \u{00D7} ",
-        DIVIDE =>   " \u{00F7} ",
-        _=>         "Error"
+        DIVIDE   => " \u{00F7} ",
+        _ => "Error"
     };
 
     let operation_string = format!("{}{}{}", value_1.get(), operation_symbol, value_2.get());
 
     match current_operation {
-        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
+        ADD      => { value_1.set(value_1.get() + value_2.get()); },
         SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
         MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
-        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
-        _=> ()
+        DIVIDE   => { value_1.set(value_1.get() / value_2.get()); },
+        _ => ()
     }
     if current_operation == DIVIDE && value_2.get() == 0.0 {
         result =  String::from("Error: divide by 0");
