@@ -4,10 +4,6 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-// use gdk::Screen;
-// use gdk::Display;
-// use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
-
 use crate::functions::{the_result, set_value};
 use crate::constants::*;
 
@@ -111,8 +107,6 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                // operation(previous_operation.get(), &value_1, &value_2);
-
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
             }
@@ -129,7 +123,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(SUBTRACT);
-                // operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
             }
@@ -147,7 +141,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(MULTIPLY);
-                // operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
@@ -166,7 +160,7 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(DIVIDE);
-                // operation(previous_operation.get(), &value_1, &value_2);
+
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
