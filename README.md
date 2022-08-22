@@ -26,6 +26,6 @@ make Entry scrollable!
 
 ISSUES:
 
-How to add digits after '.'?
+How to add digits after '.'? Solved for one digit after '.'
 
 --------------------

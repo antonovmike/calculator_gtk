@@ -4,26 +4,12 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use gdk::Screen;
-use gdk::Display;
-use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
+// use gdk::Screen;
+// use gdk::Display;
+// use gtk::{gdk, Application, ApplicationWindow, Button, CssProvider, StyleContext};
 
-use crate::functions::{operation, the_result, set_value};
+use crate::functions::{the_result, set_value};
 use crate::constants::*;
-
-// https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/3/main.rs
-// pub fn load_css() {
-//     // Load the CSS file and add it to the provider
-//     let provider = CssProvider::new();
-//     provider.load_from_data(include_bytes!("style.css"));
-
-//     // Add the provider to the default screen
-//     StyleContext::add_provider_for_screen(
-//         &Screen::default().expect("Could not connect to a display."),
-//         &provider,
-//         gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-//     );
-// }
 
 pub fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
@@ -125,7 +111,7 @@ pub fn build_ui(application: &gtk::Application) {
                 previous_operation.set(current_operation.get());
                 current_operation.set(ADD);
 
-                operation(previous_operation.get(), &value_1, &value_2);
+                // operation(previous_operation.get(), &value_1, &value_2);
 
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
@@ -133,7 +119,7 @@ pub fn build_ui(application: &gtk::Application) {
             else {
                 current_operation.set(ADD);
             }
-            entry.insert_text("+", &mut -1);
+            entry.insert_text(" + ", &mut -1);
         }));
     minus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
@@ -143,14 +129,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(SUBTRACT);
-                operation(previous_operation.get(), &value_1, &value_2);
+                // operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0); // Reset to 0
             }
             else {
                 current_operation.set(SUBTRACT);
             }
-            entry.insert_text("-", &mut -1);
+            entry.insert_text(" - ", &mut -1);
         }));
 
     mult_button.connect_clicked(clone!(
@@ -161,14 +147,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(MULTIPLY);
-                operation(previous_operation.get(), &value_1, &value_2);
+                // operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
             else {
                 current_operation.set(MULTIPLY);
             }
-            entry.insert_text("\u{00D7}", &mut -1);
+            entry.insert_text(" \u{00D7} ", &mut -1);
         }));
 
     div_button.connect_clicked(clone!(
@@ -180,14 +166,14 @@ pub fn build_ui(application: &gtk::Application) {
             if num_counter.get() == 2 {
                 previous_operation.set(current_operation.get());
                 current_operation.set(DIVIDE);
-                operation(previous_operation.get(), &value_1, &value_2);
+                // operation(previous_operation.get(), &value_1, &value_2);
                 num_counter.set(num_counter.get() - 1);
                 value_2.set(0.0);
             }
             else {
                 current_operation.set(DIVIDE);
             }
-            entry.insert_text("\u{00F7}", &mut -1);
+            entry.insert_text(" \u{00F7} ", &mut -1);
         }));
 
     equals_bttn.connect_clicked(clone!(

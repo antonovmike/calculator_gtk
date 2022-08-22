@@ -33,16 +33,6 @@ pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, va
     }
 }
 
-pub fn operation(previous_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) {
-    match previous_operation {
-        ADD =>      { value_1.set(value_1.get() + value_2.get()); },
-        SUBTRACT => { value_1.set(value_1.get() - value_2.get()); },
-        MULTIPLY => { value_1.set(value_1.get() * value_2.get()); },
-        DIVIDE =>   { value_1.set(value_1.get() / value_2.get()); },
-        _=> ()
-    }
-}
-
 pub fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) -> std::string::String {
     let mut result = String::from(" = ");
     // Add operation symbol to variable
