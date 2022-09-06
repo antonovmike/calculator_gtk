@@ -4,7 +4,7 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use crate::functions::{the_result, set_value};
+use crate::functions::{file_writer, the_result, set_value};
 use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
@@ -55,6 +55,7 @@ pub fn build_ui(application: &gtk::Application) {
             move |_| {
                 set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
+                file_writer(iterator.to_string());
             }));
         
         if iterator % 3 == 1 {
