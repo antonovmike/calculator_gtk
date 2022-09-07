@@ -1,6 +1,4 @@
-use std::cell::Cell;
 use std::fs::{self};
-use std::rc::Rc;
 use std::io::Write;
 
 pub fn file_writer(char: String, equals: bool, _clear: bool) -> String {
@@ -28,34 +26,4 @@ pub fn file_writer(char: String, equals: bool, _clear: bool) -> String {
     let a = y.to_string();
     println!("RESULT = {}", a);
     a
-}
-
-pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
-    if dot_counter == 0 {
-        println!("-> dot_counter == 0");
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num);
-        }
-    }
-    if dot_counter == 1 {
-        println!("-> dot_counter == 1");
-        if num_counter == 0 {
-            value_1.set(value_1.get() + num / 10.0);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() * 10.0 + num);
-        }
-    }
-    if dot_counter == 2 {
-        println!("-> dot_counter == 2");
-        if num_counter == 0 {
-            value_1.set(value_1.get() * 10.0 + num);
-        }
-        if num_counter == 1 {
-            value_2.set(value_2.get() + num / 10.0);
-        }
-    }
 }
