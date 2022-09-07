@@ -4,7 +4,7 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use crate::functions::{file_writer, set_value};
+use crate::functions::file_writer;
 use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
@@ -53,7 +53,6 @@ pub fn build_ui(application: &gtk::Application) {
             @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
             @strong entry, @strong dot_counter, @strong  value_1_temp =>
             move |_| {
-                set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
                 file_writer(iterator.to_string(), false, false);
             }));
@@ -78,7 +77,6 @@ pub fn build_ui(application: &gtk::Application) {
         @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
         @strong entry, @strong dot_counter, @strong  value_1_temp =>
         move |_| {
-            set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
             file_writer("0".to_string(), false, false);
             println!("{}{}", "\u{00D7}", "\u{00F7}");
@@ -184,13 +182,9 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(num_counter.get() + 1);
             // After second number has been inserted
             if num_counter.get() == 2 {
-                // let result = the_result(current_operation.get(), &value_1, &value_2);
-
                 let result_2 = file_writer("".to_string(), true, false);
-                // println!("= {}", result);
                 // ADD file_writer result TO entry
 
-                // println!("result_2 {}", result_2);
                 entry.set_text(&result_2);
                 previous_operation.set(EQUALS);
 
@@ -209,15 +203,12 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            // dot_counter.set(dot_counter.get() + 1);
             if dot_counter.get() == 0 {
                 println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
-                set_value(num_counter.get(), 1, &value_1, &value_2, 0.0);
             } else if dot_counter.get() == 1 {
                 println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
-                set_value(num_counter.get(), 2, &value_1, &value_2, 0.0);
             } else {
                 dot_counter.set(0);
             }
