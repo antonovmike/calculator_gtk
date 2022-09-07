@@ -92,9 +92,8 @@ pub fn build_ui(application: &gtk::Application) {
     let div_button   = gtk::Button::with_label(" ÷ ");
     let equals_bttn  = gtk::Button::with_label(" = ");
     // --> EXTRA BUTTONS
-    let dot_button   = gtk::Button::with_label("."); // FIX IT
+    let dot_button   = gtk::Button::with_label(".");
     let clear_button = gtk::Button::with_label("C");
-    // clear_button.add_css_class("button");
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -184,13 +183,8 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(num_counter.get() + 1);
             // After second number has been inserted
             if num_counter.get() == 2 {
-                // let result = the_result(current_operation.get(), &value_1, &value_2);
-
                 let result_2 = file_writer("".to_string(), true, false);
-                // println!("= {}", result);
-                // ADD file_writer result TO entry
-
-                // println!("result_2 {}", result_2);
+                
                 entry.set_text(&result_2);
                 previous_operation.set(EQUALS);
 
@@ -209,7 +203,6 @@ pub fn build_ui(application: &gtk::Application) {
     dot_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
-            // dot_counter.set(dot_counter.get() + 1);
             if dot_counter.get() == 0 {
                 println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
