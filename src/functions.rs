@@ -2,11 +2,10 @@ use std::cell::Cell;
 use std::fs::{self};
 use std::rc::Rc;
 use std::io::Write;
-// use std::io::{self, prelude::*, BufReader, BufRead};
 
 use crate::constants::*;
 
-pub fn file_writer(char: String, equals: bool) {
+pub fn file_writer(char: String, equals: bool, clear: bool) -> String {
     let mut file = fs::OpenOptions::new()
         .write(true)
         .append(true)
@@ -14,21 +13,23 @@ pub fn file_writer(char: String, equals: bool) {
         .unwrap();
     file.write_all(char.as_bytes());
 
-    if equals == true {
+    let y: f64 = if equals == true { 
         let content = std::fs::read_to_string("data.txt").expect("Read failed");
         let v: Vec<&str> = content.split(' ').collect();
         println!("VECTOR: {:?}", v);
         let operand = v[1].parse::<char>().unwrap();
-        let mut result: f64 = 0.0;
+        
         match operand {
-            '+' => result = v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap(),
-            '-' => result = v[0].parse::<f64>().unwrap() - v[2].parse::<f64>().unwrap(),
-            '*' => result = v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap(),
-            '/' => result = v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap(),
-            _ => result = 0.0,
+            '+' => v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap(),
+            '-' => v[0].parse::<f64>().unwrap() - v[2].parse::<f64>().unwrap(),
+            '*' => v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap(),
+            '/' => v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap(),
+            _ => 0.0,
         }
-        println!("RESULT = {}", result);
-    }
+    } else { 0.0 };
+    let a = y.to_string();
+    println!("RESULT = {}", a);
+    a
 }
 
 pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>, num: f64) {
