@@ -4,7 +4,7 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use crate::functions::{file_writer, the_result, set_value};
+use crate::functions::{file_writer, set_value};
 use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
@@ -50,8 +50,8 @@ pub fn build_ui(application: &gtk::Application) {
         let mut raw = 1;
 
         button.connect_clicked(clone!(
-            @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-            @strong dot_counter, @strong  value_1_temp =>
+            @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
+            @strong entry, @strong dot_counter, @strong  value_1_temp =>
             move |_| {
                 set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
@@ -75,8 +75,8 @@ pub fn build_ui(application: &gtk::Application) {
     
     let button_0 = gtk::Button::with_label("0");
     button_0.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, @strong entry,
-        @strong dot_counter, @strong  value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
+        @strong entry, @strong dot_counter, @strong  value_1_temp =>
         move |_| {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
@@ -177,7 +177,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, @strong entry, @strong dot_counter =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
+        @strong entry, @strong dot_counter =>
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
@@ -225,7 +226,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_detector, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong dot_detector, @strong value_1_temp =>
         move |_| {
             // CLEAR
             num_counter.set(0);

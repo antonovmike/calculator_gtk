@@ -3,7 +3,7 @@ use std::fs::{self};
 use std::rc::Rc;
 use std::io::Write;
 
-use crate::constants::*;
+// use crate::constants::*;
 
 pub fn file_writer(char: String, equals: bool, clear: bool) -> String {
     let mut file = fs::OpenOptions::new()
@@ -61,7 +61,7 @@ pub fn set_value(num_counter: i32, dot_counter: i32, value_1: &Rc<Cell<f64>>, va
         }
     }
 }
-
+/* 
 pub fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc<Cell<f64>>) -> std::string::String {
     let mut result = String::from(" = ");
     // Add operation symbol to variable
@@ -92,3 +92,4 @@ pub fn the_result(current_operation: char, value_1: &Rc<Cell<f64>>, value_2: &Rc
 
     result
 }
+*/
