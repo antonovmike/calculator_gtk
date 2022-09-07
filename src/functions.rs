@@ -2,16 +2,35 @@ use std::cell::Cell;
 use std::fs::{self};
 use std::rc::Rc;
 use std::io::Write;
+use std::io::{self, prelude::*, BufReader, BufRead};
+use std::fs::File;
+use std::path::Path;
 
 use crate::constants::*;
 
-pub fn file_writer(char: String) {
+fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where P: AsRef<Path>, {
+    let file = File::open(filename)?;
+    Ok(io::BufReader::new(file).lines())
+}
+
+pub fn file_writer(char: String, equals: bool) {
     let mut file = fs::OpenOptions::new()
         .write(true)
-        .append(true) // This is needed to append to file
+        .append(true)
         .open("data.txt")
         .unwrap();
     file.write_all(char.as_bytes());
+
+    if equals == true {
+        if let Ok(lines) = read_lines("data.txt") {
+            for line in lines {
+                if let Ok(ip) = line {
+                    println!("LINES {}", ip);
+                }
+            }
+        }
+    }
 
     let content = std::fs::read_to_string("data.txt").expect("Read failed");
     println!("content: {}", content);

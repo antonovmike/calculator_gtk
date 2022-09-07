@@ -55,7 +55,7 @@ pub fn build_ui(application: &gtk::Application) {
             move |_| {
                 set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, button_value);
                 entry.insert_text(&iterator.to_string(), &mut -1);
-                file_writer(iterator.to_string());
+                file_writer(iterator.to_string(), false);
             }));
         
         if iterator % 3 == 1 {
@@ -80,7 +80,7 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
-            file_writer("0".to_string());
+            file_writer("0".to_string(), false);
             println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
     grid.attach(&button_0, 1, 4, 1, 1);
@@ -116,7 +116,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(ADD);
             }
             entry.insert_text(" + ", &mut -1);
-            file_writer(" + ".to_string());
+            file_writer("\n+\n".to_string(), false);
         }));
     minus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
@@ -134,7 +134,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(SUBTRACT);
             }
             entry.insert_text(" - ", &mut -1);
-            file_writer(" - ".to_string());            
+            file_writer("\n-\n".to_string(), false);            
         }));
 
     mult_button.connect_clicked(clone!(
@@ -153,7 +153,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(MULTIPLY);
             }
             entry.insert_text(" \u{00D7} ", &mut -1);
-            file_writer(" * ".to_string());
+            file_writer("\n*\n".to_string(), false);
         }));
 
     div_button.connect_clicked(clone!(
@@ -173,7 +173,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(DIVIDE);
             }
             entry.insert_text(" \u{00F7} ", &mut -1);
-            file_writer(" / ".to_string());
+            file_writer("\n/\n".to_string(), false);
         }));
 
     equals_bttn.connect_clicked(clone!(
@@ -194,6 +194,8 @@ pub fn build_ui(application: &gtk::Application) {
                 value_1.set(0.0);
                 value_2.set(0.0);
                 current_operation.set(NONE);
+
+                file_writer("".to_string(), true);
                 let _file = std::fs::File::create("data.txt");
             }
         }));
@@ -215,7 +217,7 @@ pub fn build_ui(application: &gtk::Application) {
                 dot_counter.set(0);
             }
             entry.insert_text(".", &mut -1);
-            file_writer(".".to_string());
+            file_writer(".".to_string(), false);
         }));
 
     clear_button.connect_clicked(clone!(
