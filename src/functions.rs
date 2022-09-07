@@ -24,6 +24,5 @@ pub fn file_writer(char: String, equals: bool, _clear: bool) -> String {
         }
     } else { 0.0 };
     let a = y.to_string();
-    println!("RESULT = {}", a);
     a
 }
