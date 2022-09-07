@@ -92,7 +92,6 @@ pub fn build_ui(application: &gtk::Application) {
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label("."); // FIX IT
     let clear_button = gtk::Button::with_label("C");
-    // clear_button.add_css_class("button");
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
@@ -182,10 +181,9 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(num_counter.get() + 1);
             // After second number has been inserted
             if num_counter.get() == 2 {
-                let result_2 = file_writer("".to_string(), true, false);
-                // ADD file_writer result TO entry
+                let result = file_writer("".to_string(), true, false);
 
-                entry.set_text(&result_2);
+                entry.set_text(&result);
                 previous_operation.set(EQUALS);
 
                 // Reset variables
