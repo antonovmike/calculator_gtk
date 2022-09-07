@@ -27,9 +27,6 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-
-    let dot_detector: Rc<Cell<char>> = Rc::new(Cell::new('_'));
-    let value_1_temp: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let num_counter = Rc::new(Cell::new(0));
     let dot_counter = Rc::new(Cell::new(0)); // INCREASES EACH TIME dot_button PRESSED
     let previous_operation = Rc::new(Cell::new(NONE));
@@ -50,21 +47,17 @@ pub fn build_ui(application: &gtk::Application) {
         let mut raw = 1;
 
         button.connect_clicked(clone!(
-            @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
-            @strong entry, @strong dot_counter, @strong  value_1_temp =>
+            @strong entry, @strong dot_counter =>
             move |_| {
                 entry.insert_text(&iterator.to_string(), &mut -1);
                 file_writer(iterator.to_string(), false, false);
             }));
         
-        if iterator % 3 == 1 {
-            column = 0;
-        } else if iterator % 3 == 2 {
-            column = 1;
-        } else if iterator % 3 == 0 {
-            column = 2;
-        }
-        if iterator > 3 && iterator < 7 { raw = 2 }
+        if iterator % 3 == 1      { column = 0; }
+        else if iterator % 3 == 2 { column = 1; }
+        else if iterator % 3 == 0 { column = 2; }
+        
+        if iterator > 3 && iterator < 7        { raw = 2 }
         else if iterator >= 7 && iterator <= 9 { raw = 3 }
 
         grid.attach(&button, column, raw, 1, 1);
@@ -74,8 +67,7 @@ pub fn build_ui(application: &gtk::Application) {
     
     let button_0 = gtk::Button::with_label("0");
     button_0.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong previous_operation, 
-        @strong entry, @strong dot_counter, @strong  value_1_temp =>
+        @strong entry, @strong dot_counter =>
         move |_| {
             entry.insert_text("0", &mut -1);
             file_writer("0".to_string(), false, false);
@@ -95,7 +87,7 @@ pub fn build_ui(application: &gtk::Application) {
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
             // Increase num_counter
@@ -116,7 +108,7 @@ pub fn build_ui(application: &gtk::Application) {
             file_writer(" + ".to_string(), false, false);
         }));
     minus_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
             num_counter.set(num_counter.get() + 1);
@@ -135,7 +127,7 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     mult_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
             num_counter.set(num_counter.get() + 1);
@@ -154,7 +146,7 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     div_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong num_counter, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
             num_counter.set(num_counter.get() + 1);
@@ -199,7 +191,7 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     dot_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, @strong dot_counter =>
+        @strong entry, @strong dot_counter =>
         move |_| {
             if dot_counter.get() == 0 {
                 println!("dot_counter inside dot button IF: {}", dot_counter.get());
@@ -215,10 +207,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
-        @strong dot_detector, @strong value_1_temp =>
+        @strong value_1, @strong value_2, @strong num_counter, @strong entry =>
         move |_| {
-            // CLEAR
             num_counter.set(0);
             value_1.set(0.0);
             value_2.set(0.0);
