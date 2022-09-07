@@ -18,6 +18,8 @@ FIX:
 
 '.' button. Try to add dot_detector checker to each numeric button function. If it is true - add each digit after '.' pressed to value_1_temp
 
+Try to get string from Entry::builder()
+
 make Entry scrollable!
 
 'clear' button
