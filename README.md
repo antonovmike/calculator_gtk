@@ -4,7 +4,7 @@
 
 --------------------
 
-Сalculator only counts integers and decimals
+f64 wors
 
 --------------------
 
@@ -16,18 +16,10 @@ Listen for keyboard events
 
 FIX:
 
-'.' button. Try to add dot_detector checker to each numeric button function. If it is true - add each digit after '.' pressed to value_1_temp
+Get rid of data.txt
 
 Try to get string from Entry::builder()
 
 make Entry scrollable!
-
-'clear' button
-
---------------------
-
-ISSUES:
-
-How to add digits after '.'? Solved for one digit after '.'
 
 --------------------
