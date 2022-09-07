@@ -194,6 +194,7 @@ pub fn build_ui(application: &gtk::Application) {
                 value_1.set(0.0);
                 value_2.set(0.0);
                 current_operation.set(NONE);
+                let _file = std::fs::File::create("data.txt");
             }
         }));
 
