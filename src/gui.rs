@@ -80,6 +80,7 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             set_value(num_counter.get(), dot_counter.get(), &value_1, &value_2, 0.0);
             entry.insert_text("0", &mut -1);
+            file_writer("0".to_string());
             println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
     grid.attach(&button_0, 1, 4, 1, 1);
@@ -115,6 +116,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(ADD);
             }
             entry.insert_text(" + ", &mut -1);
+            file_writer(" + ".to_string());
         }));
     minus_button.connect_clicked(clone!(
         @strong value_1, @strong value_2, @strong num_counter, @strong entry, 
@@ -132,6 +134,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(SUBTRACT);
             }
             entry.insert_text(" - ", &mut -1);
+            file_writer(" - ".to_string());            
         }));
 
     mult_button.connect_clicked(clone!(
@@ -150,6 +153,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(MULTIPLY);
             }
             entry.insert_text(" \u{00D7} ", &mut -1);
+            file_writer(" * ".to_string());
         }));
 
     div_button.connect_clicked(clone!(
@@ -169,6 +173,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(DIVIDE);
             }
             entry.insert_text(" \u{00F7} ", &mut -1);
+            file_writer(" / ".to_string());
         }));
 
     equals_bttn.connect_clicked(clone!(
@@ -208,7 +213,8 @@ pub fn build_ui(application: &gtk::Application) {
             } else {
                 dot_counter.set(0);
             }
-            entry.insert_text(".", &mut -1); // Add '.' to entry
+            entry.insert_text(".", &mut -1);
+            file_writer(".".to_string());
         }));
 
     clear_button.connect_clicked(clone!(
@@ -220,6 +226,7 @@ pub fn build_ui(application: &gtk::Application) {
             value_2.set(0.0);
             dot_counter.set(0);
             entry.set_text("");
+            let _file = std::fs::File::create("data.txt");
         }));
 
     // --> ATTACH OPERATORS AND EXTRA BUTTONS TO GRID

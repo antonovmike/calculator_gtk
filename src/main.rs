@@ -1,6 +1,4 @@
 use gtk::prelude::*;
-use std::fs;
-use std::path::Path;
 
 pub use gdk::Display;
 pub use gtk::{CssProvider, StyleContext};
@@ -12,10 +10,6 @@ mod functions;
 mod constants;
 
 fn main() {
-    if Path::new("data.txt").exists() {
-        fs::remove_file("data.txt").unwrap();
-    }
-
     let application = gtk::Application::new(
         Some("com.github.gtk-rs.examples.grid-packing"),
         Default::default(),
