@@ -22,4 +22,6 @@ Try to get string from Entry::builder()
 
 make Entry scrollable!
 
+Set rounding precision
+
 --------------------
