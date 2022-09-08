@@ -1,7 +1,7 @@
 use std::fs::{self};
 use std::io::Write;
 
-pub fn file_writer(char: String, equals: bool, _clear: bool) -> String {
+pub fn file_writer(char: String, equals: bool) -> String {
     let mut file = fs::OpenOptions::new()
         .write(true)
         .append(true)
