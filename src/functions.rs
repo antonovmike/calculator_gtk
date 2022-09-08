@@ -23,7 +23,7 @@ pub fn file_writer(char: String, equals: bool, _clear: bool) -> String {
             _ => 0.0,
         }
     } else { 0.0 };
-    let a = y.to_string();
-    println!("RESULT = {}", a);
-    a
+    let rounded = format!("{:.6}", y);
+    println!("RESULT = {}", rounded);
+    rounded
 }

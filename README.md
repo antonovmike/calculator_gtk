@@ -12,7 +12,7 @@ ADD:
 
 Listen for keyboard events
 
-Rounding
+Rounding - done! Set rounding precision
 
 --------------------
 
