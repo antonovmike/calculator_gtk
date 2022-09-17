@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use std::fs::{self};
 use std::io::Write;
 
@@ -23,5 +25,22 @@ pub fn file_writer(char: String, equals: bool) -> String {
             _ => "0".to_string(),
         }
     } else { "0".to_string() };
+
     result
+}
+
+// TEST
+
+fn adder() -> String {
+    file_writer("2".to_string(), false);
+    file_writer(" + ".to_string(), false);
+    file_writer("2".to_string(), false);
+    let d = file_writer("".to_string(), true);
+    println!("{d}");
+    return d
+}
+
+#[test]
+fn add() {
+    assert_eq!("4".to_string(), adder());
 }
