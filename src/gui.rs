@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use gtk::Entry;
 use std::cell::Cell;
 use std::rc::Rc;
