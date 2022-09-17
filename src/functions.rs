@@ -58,5 +58,5 @@ fn mul() {
 #[test]
 fn div() {
     let file = fs::File::create("data.txt");
-    assert_eq!("0.666667".to_string(), tester("2".to_string(), " / ".to_string(), "3".to_string()));
+    assert_eq!("2.000000".to_string(), tester("6".to_string(), " / ".to_string(), "3".to_string()));
 }
