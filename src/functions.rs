@@ -31,10 +31,10 @@ pub fn file_writer(char: String, equals: bool) -> String {
 
 // TEST
 
-fn adder() -> String {
-    file_writer("2".to_string(), false);
-    file_writer(" + ".to_string(), false);
-    file_writer("2".to_string(), false);
+fn tester(a: String, b: String, c: String) -> String {
+    file_writer(a, false);
+    file_writer(b, false);
+    file_writer(c, false);
     let d = file_writer("".to_string(), true);
     println!("{d}");
     return d
@@ -42,5 +42,21 @@ fn adder() -> String {
 
 #[test]
 fn add() {
-    assert_eq!("4".to_string(), adder());
+    let file = fs::File::create("data.txt");
+    assert_eq!("4".to_string(), tester("2".to_string(), " + ".to_string(), "2".to_string()));
+}
+#[test]
+fn min() {
+    let file = fs::File::create("data.txt");
+    assert_eq!("0".to_string(), tester("2".to_string(), " - ".to_string(), "2".to_string()));
+}
+#[test]
+fn mul() {
+    let file = fs::File::create("data.txt");
+    assert_eq!("6.000000".to_string(), tester("2".to_string(), " * ".to_string(), "3".to_string()));
+}
+#[test]
+fn div() {
+    let file = fs::File::create("data.txt");
+    assert_eq!("0.666667".to_string(), tester("2".to_string(), " / ".to_string(), "3".to_string()));
 }
