@@ -41,6 +41,8 @@ pub fn build_ui(application: &gtk::Application) {
         .build();
     grid.attach(&entry, 0, 0, 3 ,1);
 
+    // let get_entry = Rc::new(Cell::new(entry.text()));
+
     // NUM BUTTONS
     for iterator in 1..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
@@ -168,6 +170,10 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
+
+            let get_entry = entry.text();
+            println!("ENTRY {}", get_entry);
+            
             // After second number has been inserted
             if num_counter.get() == 2 {
                 let result = file_writer("".to_string(), true);
