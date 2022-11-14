@@ -175,7 +175,7 @@ pub fn build_ui(application: &gtk::Application) {
             let get_entry = entry.text();
             let a: String = format!("{}", get_entry);
             // println!("ENTRY {}", get_entry);
-            entry_parser(a, false);
+            entry_parser(a, true);
 
             // After second number has been inserted
             // if num_counter.get() == 2 {
