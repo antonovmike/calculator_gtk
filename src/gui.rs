@@ -7,6 +7,7 @@ use gtk::prelude::*;
 use glib_macros::clone;
 
 use crate::functions::file_writer;
+use crate::functions::entry_parser;
 use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
@@ -172,8 +173,10 @@ pub fn build_ui(application: &gtk::Application) {
             num_counter.set(num_counter.get() + 1);
 
             let get_entry = entry.text();
-            println!("ENTRY {}", get_entry);
-            
+            let a: String = format!("{}", get_entry);
+            // println!("ENTRY {}", get_entry);
+            entry_parser(a, false);
+
             // After second number has been inserted
             if num_counter.get() == 2 {
                 let result = file_writer("".to_string(), true);
@@ -188,8 +191,8 @@ pub fn build_ui(application: &gtk::Application) {
                 value_2.set(0.0);
                 current_operation.set(NONE);
 
-                file_writer("".to_string(), false);
-                let _file = std::fs::File::create("data.txt");
+                // file_writer("".to_string(), false);
+                // let _file = std::fs::File::create("data.txt");
             }
         }));
 
