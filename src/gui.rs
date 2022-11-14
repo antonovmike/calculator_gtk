@@ -4,7 +4,7 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use crate::functions::file_writer;
+use crate::functions::entry_parser;
 use crate::constants::*;
 
 pub fn build_ui(application: &gtk::Application) {
@@ -45,17 +45,15 @@ pub fn build_ui(application: &gtk::Application) {
         let mut column = 0;
         let mut raw = 1;
 
-        button.connect_clicked(clone!(
-            @strong entry, @strong dot_counter =>
+        button.connect_clicked(clone!( @strong entry =>
             move |_| {
                 entry.insert_text(&iterator.to_string(), &mut -1);
-                file_writer(iterator.to_string(), false);
             }));
         
-        if iterator % 3 == 1      { column = 0; }
-        else if iterator % 3 == 2 { column = 1; }
+        if iterator      % 3 == 1 { column = 0; } 
+        else if iterator % 3 == 2 { column = 1; } 
         else if iterator % 3 == 0 { column = 2; }
-        
+
         if iterator > 3 && iterator < 7        { raw = 2 }
         else if iterator >= 7 && iterator <= 9 { raw = 3 }
 
@@ -63,11 +61,10 @@ pub fn build_ui(application: &gtk::Application) {
     }
     
     let button_0 = gtk::Button::with_label("0");
-    button_0.connect_clicked(clone!(
-        @strong entry, @strong dot_counter =>
+    button_0.connect_clicked(clone!( @strong entry =>
         move |_| {
             entry.insert_text("0", &mut -1);
-            file_writer("0".to_string(), false);
+            println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
     grid.attach(&button_0, 1, 4, 1, 1);
 
@@ -101,7 +98,6 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(ADD);
             }
             entry.insert_text(" + ", &mut -1);
-            file_writer(" + ".to_string(), false);
         }));
     minus_button.connect_clicked(clone!(
         @strong value_2, @strong num_counter, @strong entry, 
@@ -118,8 +114,7 @@ pub fn build_ui(application: &gtk::Application) {
             else {
                 current_operation.set(SUBTRACT);
             }
-            entry.insert_text(" - ", &mut -1);
-            file_writer(" - ".to_string(), false);            
+            entry.insert_text(" - ", &mut -1);           
         }));
 
     mult_button.connect_clicked(clone!(
@@ -138,7 +133,6 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(MULTIPLY);
             }
             entry.insert_text(" \u{00D7} ", &mut -1);
-            file_writer(" * ".to_string(), false);
         }));
 
     div_button.connect_clicked(clone!(
@@ -158,52 +152,40 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(DIVIDE);
             }
             entry.insert_text(" \u{00F7} ", &mut -1);
-            file_writer(" / ".to_string(), false);
+            // file_writer(" / ".to_string(), false);
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong current_operation, 
-        @strong entry, @strong dot_counter =>
+        @strong value_1, @strong value_2, @strong current_operation, 
+        @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
             // Increase num_counter
             num_counter.set(num_counter.get() + 1);
-            // After second number has been inserted
-            if num_counter.get() == 2 {
-                let result_2 = file_writer("".to_string(), true);
-                
-                entry.set_text(&result_2);
-                previous_operation.set(EQUALS);
 
-                // Reset variables
-                num_counter.set(0);
-                dot_counter.set(0);
-                value_1.set(0.0);
-                value_2.set(0.0);
-                current_operation.set(NONE);
+            let get_entry = entry.text();
+            let a: String = format!("{}", get_entry);
+            let result = entry_parser(a, true);
 
-                file_writer("".to_string(), false);
-                let _file = std::fs::File::create("data.txt");
-            }
+            entry.set_text(&result);
         }));
 
     dot_button.connect_clicked(clone!(
         @strong entry, @strong dot_counter =>
         move |_| {
             if dot_counter.get() == 0 {
-                // println!("dot_counter inside dot button IF: {}", dot_counter.get());
+                println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
             } else if dot_counter.get() == 1 {
-                // println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
+                println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
             } else {
                 dot_counter.set(0);
             }
             entry.insert_text(".", &mut -1);
-            file_writer(".".to_string(), false);
         }));
 
     clear_button.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong num_counter, @strong entry =>
+        @strong num_counter, @strong entry =>
         move |_| {
             num_counter.set(0);
             value_1.set(0.0);

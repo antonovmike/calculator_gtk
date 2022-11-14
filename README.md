@@ -14,6 +14,19 @@ sudo apt install libgtk-3-dev build-essential
 
 --------------------
 
+Get text from entry
+entry.text()
+Each time you click numeric button, method text() gives you the whole entry comtent, for example:
+```bash
+Click Button 0 -> 0
+Click Button . -> 0.
+Click Button 2 -> 0.2
+Click Button + -> 0.2 +
+```
+etc.
+
+--------------------
+
 f64 wors
 
 --------------------
@@ -25,10 +38,6 @@ Listen for keyboard events
 --------------------
 
 FIX:
-
-Get rid of data.txt
-
-Try to get string from Entry::builder()
 
 make Entry scrollable!
 
