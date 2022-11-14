@@ -19,8 +19,11 @@ pub fn entry_parser(entry_data: String, equals: bool) -> String {
         }
     } else { "0".to_string() };
 
-    // result
-    "".to_string()
+    println!("entry_data = {}", entry_data);
+    println!("result = {}", result);
+
+    result
+    // "".to_string()
 }
 
 pub fn file_writer(char: String, equals: bool) -> String {

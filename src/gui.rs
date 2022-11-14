@@ -6,7 +6,7 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
-use crate::functions::file_writer;
+// use crate::functions::file_writer;
 use crate::functions::entry_parser;
 use crate::constants::*;
 
@@ -53,7 +53,7 @@ pub fn build_ui(application: &gtk::Application) {
         button.connect_clicked(clone!( @strong entry =>
             move |_| {
                 entry.insert_text(&iterator.to_string(), &mut -1);
-                file_writer(iterator.to_string(), false);
+                // file_writer(iterator.to_string(), false);
             }));
         
         if iterator      % 3 == 1 { column = 0; } 
@@ -70,7 +70,7 @@ pub fn build_ui(application: &gtk::Application) {
     button_0.connect_clicked(clone!( @strong entry =>
         move |_| {
             entry.insert_text("0", &mut -1);
-            file_writer("0".to_string(), false);
+            // file_writer("0".to_string(), false);
             println!("{}{}", "\u{00D7}", "\u{00F7}");
         }));
     grid.attach(&button_0, 1, 4, 1, 1);
@@ -105,7 +105,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(ADD);
             }
             entry.insert_text(" + ", &mut -1);
-            file_writer(" + ".to_string(), false);
+            // file_writer(" + ".to_string(), false);
         }));
     minus_button.connect_clicked(clone!(
         @strong value_2, @strong num_counter, @strong entry, 
@@ -123,7 +123,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(SUBTRACT);
             }
             entry.insert_text(" - ", &mut -1);
-            file_writer(" - ".to_string(), false);            
+            // file_writer(" - ".to_string(), false);            
         }));
 
     mult_button.connect_clicked(clone!(
@@ -142,7 +142,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(MULTIPLY);
             }
             entry.insert_text(" \u{00D7} ", &mut -1);
-            file_writer(" * ".to_string(), false);
+            // file_writer(" * ".to_string(), false);
         }));
 
     div_button.connect_clicked(clone!(
@@ -162,7 +162,7 @@ pub fn build_ui(application: &gtk::Application) {
                 current_operation.set(DIVIDE);
             }
             entry.insert_text(" \u{00F7} ", &mut -1);
-            file_writer(" / ".to_string(), false);
+            // file_writer(" / ".to_string(), false);
         }));
 
     equals_bttn.connect_clicked(clone!(
@@ -178,22 +178,22 @@ pub fn build_ui(application: &gtk::Application) {
             entry_parser(a, false);
 
             // After second number has been inserted
-            if num_counter.get() == 2 {
-                let result = file_writer("".to_string(), true);
+            // if num_counter.get() == 2 {
+            //     let result = file_writer("".to_string(), true);
 
-                entry.set_text(&result);
-                previous_operation.set(EQUALS);
+            //     entry.set_text(&result);
+            //     previous_operation.set(EQUALS);
 
-                // Reset variables
-                num_counter.set(0);
-                dot_counter.set(0);
-                value_1.set(0.0);
-                value_2.set(0.0);
-                current_operation.set(NONE);
+            //     // Reset variables
+            //     num_counter.set(0);
+            //     dot_counter.set(0);
+            //     value_1.set(0.0);
+            //     value_2.set(0.0);
+            //     current_operation.set(NONE);
 
-                // file_writer("".to_string(), false);
-                // let _file = std::fs::File::create("data.txt");
-            }
+            //     // file_writer("".to_string(), false);
+            //     // let _file = std::fs::File::create("data.txt");
+            // }
         }));
 
     dot_button.connect_clicked(clone!(
@@ -209,7 +209,7 @@ pub fn build_ui(application: &gtk::Application) {
                 dot_counter.set(0);
             }
             entry.insert_text(".", &mut -1);
-            file_writer(".".to_string(), false);
+            // file_writer(".".to_string(), false);
         }));
 
     clear_button.connect_clicked(clone!(
