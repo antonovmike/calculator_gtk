@@ -19,8 +19,9 @@ entry.text()
 Each time you click numeric button, method text() gives you the whole entry comtent, for example:
 ```bash
 Click Button 0 -> 0
-Click Button 1 -> 01
-Click Button 2 -> 012
+Click Button . -> 0.
+Click Button 2 -> 0.2
+Click Button + -> 0.2 +
 ```
 etc.
 
