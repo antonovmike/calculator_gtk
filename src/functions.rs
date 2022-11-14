@@ -1,8 +1,3 @@
-#![allow(unused)]
-
-use std::fs::{self};
-use std::io::Write;
-
 pub fn entry_parser(entry_data: String, equals: bool) -> String {
     let result: String = if equals == true {
         let v: Vec<&str> = entry_data.split(' ').collect();
