@@ -40,7 +40,6 @@ pub fn build_ui(application: &gtk::Application) {
     grid.attach(&entry, 0, 0, 3 ,1);
 
     // NUM BUTTONS
-    let mut button_value = 1.0;
     for iterator in 1..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
@@ -61,8 +60,6 @@ pub fn build_ui(application: &gtk::Application) {
         else if iterator >= 7 && iterator <= 9 { raw = 3 }
 
         grid.attach(&button, column, raw, 1, 1);
-
-        button_value += 1.0;
     }
     
     let button_0 = gtk::Button::with_label("0");
