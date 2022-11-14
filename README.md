@@ -39,10 +39,6 @@ Listen for keyboard events
 
 FIX:
 
-Get rid of data.txt
-
-Try to get string from Entry::builder()
-
 make Entry scrollable!
 
 Set rounding precision
