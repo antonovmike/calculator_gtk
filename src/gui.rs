@@ -151,7 +151,7 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2, @strong current_operation, 
+        @strong value_1, @strong value_2,
         @strong num_counter, @strong entry, @strong dot_counter =>
         move |_| {
             // Increase num_counter
