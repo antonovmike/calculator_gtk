@@ -168,10 +168,8 @@ pub fn build_ui(application: &gtk::Application) {
         @strong entry, @strong dot_counter =>
         move |_| {
             if dot_counter.get() == 0 {
-                // println!("dot_counter inside dot button IF: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
             } else if dot_counter.get() == 1 {
-                // println!("dot_counter inside dot button ELSE: {}", dot_counter.get());
                 dot_counter.set(dot_counter.get() + 1);
             } else {
                 dot_counter.set(0);

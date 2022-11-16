@@ -1,5 +1,5 @@
 pub fn entry_parser(entry_data: String, equals: bool) -> String {
-    let result: String = if equals == true {
+    let result: String = if equals {
         let v: Vec<&str> = entry_data.split(' ').collect();
         println!("VECTOR: {:?}", v);
         let operand = v[1].parse::<char>().unwrap();
@@ -8,8 +8,8 @@ pub fn entry_parser(entry_data: String, equals: bool) -> String {
         match operand {
             '+' => (v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap()).to_string(),
             '-' => (v[0].parse::<f64>().unwrap() - v[2].parse::<f64>().unwrap()).to_string(),
-            '×' => format!("{}", extra_zeroes_remover(v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap())),
-            '÷' => format!("{}", extra_zeroes_remover(v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap())),
+            '×' => format!("{:.6}", extra_zeroes_remover(v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap())),
+            '÷' => format!("{:.6}", extra_zeroes_remover(v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap())),
             _ => "0".to_string(),
         }
     } else { "0".to_string() };
