@@ -55,10 +55,10 @@ pub fn build_ui(application: &gtk::Application) {
         if iterator == 3 || iterator == 6 || iterator == 9 { column = 2 }
         if iterator == 0 { column = 1 }
         
-        if      iterator >= 1 && iterator <= 3  { raw = 1 }
-        else if iterator >= 4 && iterator <= 6  { raw = 2 }
-        else if iterator >= 7 && iterator <= 9  { raw = 3 }
-        else if iterator == 0                   { raw = 4 }
+        if      (1..=3).contains(&iterator) { raw = 1 }
+        else if (4..=6).contains(&iterator) { raw = 2 }
+        else if (7..=9).contains(&iterator) { raw = 3 }
+        else if iterator == 0                    { raw = 4 }
 
         grid.attach(&button, column, raw, 1, 1);
     }
