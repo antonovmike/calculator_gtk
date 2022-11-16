@@ -37,4 +37,5 @@ etc.
 - Listen for keyboard events
 - Scrollable Entry
 - Set rounding precision
-
+- Documentation
+- Tests
