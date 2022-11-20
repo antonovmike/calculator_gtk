@@ -27,7 +27,6 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let dot_counter = Rc::new(Cell::new(0)); // INCREASES EACH TIME dot_button PRESSED
     let previous_operation = Rc::new(Cell::new(NONE));
     let current_operation = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
@@ -102,7 +101,7 @@ pub fn build_ui(application: &gtk::Application) {
 
     equals_bttn.connect_clicked(clone!(
         @strong value_1, @strong value_2,
-        @strong entry, @strong dot_counter =>
+        @strong entry =>
         move |_| {
             let get_entry = entry.text();
             let a: String = format!("{}", get_entry);
@@ -112,15 +111,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     dot_button.connect_clicked(clone!(
-        @strong entry, @strong dot_counter =>
+        @strong entry =>
         move |_| {
-            if dot_counter.get() == 0 {
-                dot_counter.set(dot_counter.get() + 1);
-            } else if dot_counter.get() == 1 {
-                dot_counter.set(dot_counter.get() + 1);
-            } else {
-                dot_counter.set(0);
-            }
             entry.insert_text(".", &mut -1);
         }));
 
@@ -129,7 +121,6 @@ pub fn build_ui(application: &gtk::Application) {
         move |_| {
             value_1.set(0.0);
             value_2.set(0.0);
-            dot_counter.set(0);
             entry.set_text("");
         }));
 
