@@ -12,6 +12,12 @@ or
 ```bash
 sudo apt-get install libgtk-3-dev
 ```
+Build and run app:
+```bash
+cargo build --release
+/target/release
+./calculator_gtk
+```
 
 **Does not work with nightly**
 ```bash
