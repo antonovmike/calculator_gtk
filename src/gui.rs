@@ -1,4 +1,4 @@
-#![allow(unused)]
+// #![allow(unused)]
 
 use gtk::Entry;
 use std::cell::Cell;
@@ -29,9 +29,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    
-    let previous_operation = Rc::new(Cell::new(NONE));
-    let current_operation = Rc::new(Cell::new(NONE));
+
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
