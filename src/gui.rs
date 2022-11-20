@@ -98,8 +98,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(@strong entry => move |_| {
-            value_1.set(0.0);
-            value_2.set(0.0);
+            value_1.set(NONE);
+            value_2.set(NONE);
             entry.set_text("");
         }));
 
