@@ -29,7 +29,7 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let num_counter = Rc::new(Cell::new(0));
+    
     let dot_counter = Rc::new(Cell::new(0)); // INCREASES EACH TIME dot_button PRESSED
     let previous_operation = Rc::new(Cell::new(NONE));
     let current_operation = Rc::new(Cell::new(NONE));
@@ -77,109 +77,39 @@ pub fn build_ui(application: &gtk::Application) {
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
-        @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
-            // Increase num_counter
-            num_counter.set(num_counter.get() + 1);
-            // After second number has been inserted
-            if num_counter.get() == 2 {
-                // Set previous and current operation
-                previous_operation.set(current_operation.get());
-                current_operation.set(ADD);
-
-                num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0); // Reset to 0
-            }
-            else {
-                current_operation.set(ADD);
-            }
             entry.insert_text(" + ", &mut -1);
         }));
     minus_button.connect_clicked(clone!(
-        @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
-            num_counter.set(num_counter.get() + 1);
-            if num_counter.get() == 2 {
-                previous_operation.set(current_operation.get());
-                current_operation.set(SUBTRACT);
-
-                num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0); // Reset to 0
-            }
-            else {
-                current_operation.set(SUBTRACT);
-            }
             entry.insert_text(" - ", &mut -1);           
         }));
 
     mult_button.connect_clicked(clone!(
-        @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
-            num_counter.set(num_counter.get() + 1);
-            if num_counter.get() == 2 {
-                previous_operation.set(current_operation.get());
-                current_operation.set(MULTIPLY);
-
-                num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0);
-            }
-            else {
-                current_operation.set(MULTIPLY);
-            }
             entry.insert_text(" \u{00D7} ", &mut -1);
         }));
 
     div_button.connect_clicked(clone!(
-        @strong value_2, @strong num_counter, @strong entry, 
+        @strong value_2, @strong entry, 
         @strong previous_operation, @strong current_operation =>
         move |_| {
-            num_counter.set(num_counter.get() + 1);
-        
-            if num_counter.get() == 2 {
-                previous_operation.set(current_operation.get());
-                current_operation.set(DIVIDE);
-
-                num_counter.set(num_counter.get() - 1);
-                value_2.set(0.0);
-            }
-            else {
-                current_operation.set(DIVIDE);
-            }
             entry.insert_text(" \u{00F7} ", &mut -1);
-            // file_writer(" / ".to_string(), false);
         }));
 
     equals_bttn.connect_clicked(clone!(
         @strong value_1, @strong value_2, 
-        @strong num_counter, @strong entry, @strong dot_counter =>
+        @strong entry, @strong dot_counter =>
         move |_| {
-            // Increase num_counter
-            num_counter.set(num_counter.get() + 1);
-
             let get_entry = entry.text();
             let a: String = format!("{}", get_entry);
             let result = entry_parser(a, true);
-
-            // After second number has been inserted
-            // if num_counter.get() == 2 {
-            //     let result = file_writer("".to_string(), true);
-
-            //     entry.set_text(&result);
-            //     previous_operation.set(EQUALS);
-
-            //     // Reset variables
-            //     num_counter.set(0);
-            //     dot_counter.set(0);
-            //     value_1.set(0.0);
-            //     value_2.set(0.0);
-            //     current_operation.set(NONE);
-
-            //     // file_writer("".to_string(), false);
-            //     // let _file = std::fs::File::create("data.txt");
-            // }
             entry.set_text(&result);
         }));
 
@@ -199,9 +129,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(
-        @strong num_counter, @strong entry =>
+        @strong entry =>
         move |_| {
-            num_counter.set(0);
             value_1.set(0.0);
             value_2.set(0.0);
             dot_counter.set(0);
