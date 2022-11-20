@@ -39,3 +39,4 @@ etc.
 - Set rounding precision
 - Documentation
 - Tests
+- Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
