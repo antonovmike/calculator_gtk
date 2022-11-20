@@ -60,42 +60,32 @@ pub fn build_ui(application: &gtk::Application) {
     }
 
     // --> OPERATORS
-    let plus_button  = gtk::Button::with_label(" + ");
-    let minus_button = gtk::Button::with_label(" - ");
-    let mult_button  = gtk::Button::with_label(" × ");
-    let div_button   = gtk::Button::with_label(" ÷ ");
-    let equals_bttn  = gtk::Button::with_label(" = ");
+    let plus_button  = gtk::Button::with_label(ADD);
+    let minus_button = gtk::Button::with_label(SUBTRACT);
+    let mult_button  = gtk::Button::with_label(MULTIPLY);
+    let div_button   = gtk::Button::with_label(DIVIDE);
+    let equals_bttn  = gtk::Button::with_label(EQUALS);
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label(".");
     let clear_button = gtk::Button::with_label("C");
 
     // --> CONNECT FUNCTION TO OPERATOR
-    plus_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
-            entry.insert_text(" + ", &mut -1);
+    plus_button.connect_clicked(clone!(@strong entry => move |_| {
+            entry.insert_text(ADD, &mut -1);
         }));
-    minus_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
-            entry.insert_text(" - ", &mut -1);           
+    minus_button.connect_clicked(clone!(@strong entry => move |_| {
+            entry.insert_text(SUBTRACT, &mut -1);           
         }));
 
-    mult_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
-            entry.insert_text(" \u{00D7} ", &mut -1);
+    mult_button.connect_clicked(clone!(@strong entry => move |_| {
+            entry.insert_text(MULTIPLY, &mut -1);
         }));
 
-    div_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
-            entry.insert_text(" \u{00F7} ", &mut -1);
+    div_button.connect_clicked(clone!(@strong entry => move |_| {
+            entry.insert_text(DIVIDE, &mut -1);
         }));
 
-    equals_bttn.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
+    equals_bttn.connect_clicked(clone!(@strong entry => move |_| {
             let get_entry = entry.text();
             let a: String = format!("{}", get_entry);
             let result = entry_parser(a, true);
@@ -103,15 +93,11 @@ pub fn build_ui(application: &gtk::Application) {
             entry.set_text(&result);
         }));
 
-    dot_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
+    dot_button.connect_clicked(clone!(@strong entry => move |_| {
             entry.insert_text(".", &mut -1);
         }));
 
-    clear_button.connect_clicked(clone!(
-        @strong entry =>
-        move |_| {
+    clear_button.connect_clicked(clone!(@strong entry => move |_| {
             value_1.set(0.0);
             value_2.set(0.0);
             entry.set_text("");
