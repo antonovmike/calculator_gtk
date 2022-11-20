@@ -27,8 +27,8 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
+    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
 
     let entry = Entry::builder()
         .margin_start(margin)
@@ -44,8 +44,7 @@ pub fn build_ui(application: &gtk::Application) {
         let mut column = 0;
         let mut raw = 1;
 
-        button.connect_clicked(clone!( @strong entry =>
-            move |_| {
+        button.connect_clicked(clone!( @strong entry => move |_| {
                 entry.insert_text(&iterator.to_string(), &mut -1);
             }));
 
@@ -100,8 +99,8 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(@strong entry => move |_| {
-            value_1.set(0.0);
-            value_2.set(0.0);
+            value_1.set(NONE);
+            value_2.set(NONE);
             entry.set_text("");
         }));
 
