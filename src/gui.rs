@@ -27,8 +27,6 @@ pub fn build_ui(application: &gtk::Application) {
     // --> OPERATIONAL DATA
     let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
     let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let previous_operation = Rc::new(Cell::new(NONE));
-    let current_operation = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
@@ -73,34 +71,29 @@ pub fn build_ui(application: &gtk::Application) {
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" + ", &mut -1);
         }));
     minus_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" - ", &mut -1);           
         }));
 
     mult_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" \u{00D7} ", &mut -1);
         }));
 
     div_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" \u{00F7} ", &mut -1);
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2,
         @strong entry =>
         move |_| {
             let get_entry = entry.text();

@@ -39,3 +39,4 @@ etc.
 - Set rounding precision
 - Documentation
 - Tests
+- Operations with negarive numbers
