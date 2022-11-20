@@ -76,34 +76,29 @@ pub fn build_ui(application: &gtk::Application) {
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" + ", &mut -1);
         }));
     minus_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" - ", &mut -1);           
         }));
 
     mult_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" \u{00D7} ", &mut -1);
         }));
 
     div_button.connect_clicked(clone!(
-        @strong value_2, @strong entry, 
-        @strong previous_operation, @strong current_operation =>
+        @strong entry =>
         move |_| {
             entry.insert_text(" \u{00F7} ", &mut -1);
         }));
 
     equals_bttn.connect_clicked(clone!(
-        @strong value_1, @strong value_2, 
         @strong entry =>
         move |_| {
             let get_entry = entry.text();
