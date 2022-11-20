@@ -3,9 +3,9 @@ use gtk::prelude::*;
 pub use gdk::Display;
 pub use gtk::{CssProvider, StyleContext};
 
-mod gui;
-mod functions;
 mod constants;
+mod functions;
+mod gui;
 
 fn main() {
     let application = gtk::Application::new(
