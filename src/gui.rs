@@ -25,8 +25,8 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
-    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(0.0));
+    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
+    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
