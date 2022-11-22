@@ -47,8 +47,11 @@ fn add() {
     let entry_data = "1 + 3".to_string();
     assert_eq!("4", &entry_parser(entry_data))
 }
-// #[test]
-// fn min() {}
+#[test]
+fn sub() {
+    let entry_data = "1.022 - 3.009".to_string();
+    assert_eq!("-1.9869999999999999", &entry_parser(entry_data))
+}
 // #[test]
 // fn mul() {}
 // #[test]

@@ -42,7 +42,7 @@ etc.
 
 - Listen for keyboard events
 - Scrollable Entry
-- Set rounding precision
+- Set rounding precision (1.9869999999999999 -> 1.987)
 - Documentation
 - Tests
 - Operations with negarive numbers
