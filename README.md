@@ -43,7 +43,7 @@ etc.
 
 - Listen for keyboard events
 - Scrollable Entry
-- Set rounding precision
+- Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 - Tests
 - Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
