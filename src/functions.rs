@@ -51,8 +51,17 @@ fn add() {
 fn sub() {
     let entry_data = "1.022 - 3.009".to_string();
     assert_eq!("-1.9869999999999999", &entry_parser(entry_data))
+    // Have to be 1.987
 }
-// #[test]
-// fn mul() {}
-// #[test]
-// fn div() {}
+#[test]
+fn mul() {
+    let entry_data = "1.022 × 3.009".to_string();
+    assert_eq!("3.0751", &entry_parser(entry_data))
+    // Have to be 3,075198 or 3,0752
+}
+#[test]
+fn div() {
+    let entry_data = "1.022 ÷ 3.009".to_string();
+    assert_eq!("0.3396", &entry_parser(entry_data))
+    // Have to be 0,339647723
+}
