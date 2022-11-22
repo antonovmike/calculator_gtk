@@ -1,3 +1,5 @@
+#[allow(dead_code)]
+
 pub fn entry_parser(entry_data: String) -> String {
     if entry_data.len() != 0 {
         let v: Vec<&str> = entry_data.split(' ').collect();
