@@ -12,6 +12,7 @@ or
 ```bash
 sudo apt-get install libgtk-3-dev
 ```
+
 Build and run app:
 ```bash
 cargo build --release
@@ -42,7 +43,12 @@ etc.
 
 - Listen for keyboard events
 - Scrollable Entry
-- Set rounding precision (1.9869999999999999 -> 1.987)
+- Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 - Tests
-- Operations with negarive numbers
+- Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
+- Change application_id *
+- Fix wrong input bug (one operand or one operand and operator)
+
+* If it is not "com.github.gtk-rs.examples.grid-packing" - Gtk-CRITICAL
+https://docs.gtk.org/gtk3/ctor.Application.new.html
