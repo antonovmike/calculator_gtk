@@ -35,6 +35,5 @@ fn extra_zeroes_remover(f: f64) -> String {
         }
     }
     println!("{:?}", vec);
-    let string_1: String = vec.iter().collect::<String>();
-    string_1
+    vec.iter().collect::<String>()
 }
