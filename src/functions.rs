@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+// #[allow(dead_code)]
 
 pub fn entry_parser(entry_data: String) -> String {
     if entry_data.len() != 0 {
