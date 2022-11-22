@@ -1,5 +1,3 @@
-// #[allow(dead_code)]
-
 pub fn entry_parser(entry_data: String) -> String {
     // Check if Entry is sempty string 
     // Check if only one number 
