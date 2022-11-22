@@ -1,5 +1,13 @@
 pub fn entry_parser(entry_data: String) -> String {
-    if entry_data.len() != 0 {
+    // Check if Entry is sempty string 
+    // Check if only one number 
+    // Check if Entry contains only letters
+    // Add char + digit "a1" checker
+    // Check if first number and operand with no second number
+    if entry_data.len() != 0 
+    && entry_data.chars().all(|x| x.is_alphanumeric()) == false 
+    // && entry_data.chars().all(|x| x.is_ascii_alphabetic())
+    && entry_data.chars().last().unwrap().is_numeric() {
         let v: Vec<&str> = entry_data.split(' ').collect();
         let operand = v[1].parse::<char>().unwrap();
 
@@ -30,34 +38,6 @@ fn extra_zeroes_remover(f: f64) -> String {
             vec.remove(vec.len() - 1);
         }
     }
+    
     vec.iter().collect::<String>()
-}
-
-#[test]
-fn empty() {
-    let entry_data = "".to_string();
-    assert_eq!("0", &entry_parser(entry_data))
-}
-#[test]
-fn add() {
-    let entry_data = "1 + 3".to_string();
-    assert_eq!("4", &entry_parser(entry_data))
-}
-#[test]
-fn sub() {
-    let entry_data = "1.022 - 3.009".to_string();
-    assert_eq!("-1.9869999999999999", &entry_parser(entry_data))
-    // Have to be 1.987
-}
-#[test]
-fn mul() {
-    let entry_data = "1.022 × 3.009".to_string();
-    assert_eq!("3.0751", &entry_parser(entry_data))
-    // Have to be 3,075198 or 3,0752
-}
-#[test]
-fn div() {
-    let entry_data = "1.022 ÷ 3.009".to_string();
-    assert_eq!("0.3396", &entry_parser(entry_data))
-    // Have to be 0,339647723
 }
