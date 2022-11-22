@@ -89,8 +89,8 @@ pub fn build_ui(application: &gtk::Application) {
 
     equals_bttn.connect_clicked(clone!(@strong entry => move |_| {
             let get_entry = entry.text();
-            let a: String = format!("{}", get_entry);
-            let result = entry_parser(a, true);
+            let entry_data: String = format!("{}", get_entry);
+            let result = entry_parser(entry_data);
             entry.set_text(&result);
         }));
 
