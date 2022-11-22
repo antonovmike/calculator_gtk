@@ -18,8 +18,8 @@ fn wrong_input() {
     assert_eq!("0", functions::entry_parser(entry_data));
     let entry_data = "stop_war".to_string();
     assert_eq!("0", functions::entry_parser(entry_data));
-    // let entry_data = "abcd1234".to_string();
-    // assert_eq!("0", functions::entry_parser(entry_data))
+    let entry_data = "abcd1234".to_string();
+    assert_eq!("0", functions::entry_parser(entry_data))
 }
 
 #[test]

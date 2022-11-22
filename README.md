@@ -48,7 +48,7 @@ etc.
 - Tests
 - Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
 - Change application_id *
-- Fix wrong input bug (one operand or one operand and operator)
++ Fix wrong input bug (one operand or one operand and operator)
 
 * If it is not "com.github.gtk-rs.examples.grid-packing" - Gtk-CRITICAL
 https://docs.gtk.org/gtk3/ctor.Application.new.html
