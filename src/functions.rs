@@ -3,9 +3,7 @@
 pub fn entry_parser(entry_data: String) -> String {
     if entry_data.len() != 0 {
         let v: Vec<&str> = entry_data.split(' ').collect();
-        println!("VECTOR: {:?}", v);
         let operand = v[1].parse::<char>().unwrap();
-        println!("operand = {}", operand);
 
         match operand {
             '+' => (v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap()).to_string(),
@@ -36,6 +34,6 @@ fn extra_zeroes_remover(f: f64) -> String {
             vec.remove(vec.len() - 1);
         }
     }
-    println!("{:?}", vec);
+    
     vec.iter().collect::<String>()
 }
