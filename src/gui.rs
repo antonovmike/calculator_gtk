@@ -88,10 +88,12 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     equals_bttn.connect_clicked(clone!(@strong entry => move |_| {
-            let get_entry = entry.text();
-            let entry_data: String = format!("{}", get_entry);
-            let result = entry_parser(entry_data);
-            entry.set_text(&result);
+        let get_entry = entry.text();
+        let entry_data: String = format!("{}", get_entry);
+        let result = entry_parser(entry_data.clone());
+        let entry_vew = format!("{} = {}", entry_data, result);
+
+        entry.set_text(&entry_vew);
         }));
 
     dot_button.connect_clicked(clone!(@strong entry, => move |_| {
