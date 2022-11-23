@@ -1,12 +1,6 @@
 use crate::constants::*;
 
 pub fn entry_parser(entry_data: String) -> String {
-    // char_check(&entry_data);
-    // Check if Entry is sempty string 
-    // Check if only one number 
-    // Check if Entry contains only letters
-    // Add char + digit "a1" checker
-    // Check if first number and operand with no second number
     if char_check(&entry_data) {
         let v: Vec<&str> = entry_data.split(' ').collect();
         let operand = v[1].parse::<char>().unwrap();
@@ -14,8 +8,6 @@ pub fn entry_parser(entry_data: String) -> String {
         match operand {
             '+' => (v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap()).to_string(),
             '-' => (v[0].parse::<f64>().unwrap() - v[2].parse::<f64>().unwrap()).to_string(),
-            // '×' => format!("{:.6}", v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap()),
-            // '÷' => format!("{:.6}", v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap()),
             '×' => format!(
                 "{:.6}",
                 extra_zeroes_remover(v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap())
