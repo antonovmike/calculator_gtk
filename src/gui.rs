@@ -80,13 +80,12 @@ pub fn build_ui(application: &gtk::Application) {
             entry.insert_text(ADD, &mut -1);
         }));
     minus_button.connect_clicked(clone!(@strong entry, @strong value, @strong operand => move |_| {
-            if value.take() == 0 || value.take() == 2 || operand.take() {
-                entry.insert_text(NEGATIVE, &mut -1)
-            } else if value.take() == 1 {
-                operand.set(true);
-                entry.insert_text(SUBTRACT, &mut -1)
-            }
-            println!("{}", value.take());
+        if value.take() == 1 && !operand.take() {
+            operand.set(true);
+            entry.insert_text(SUBTRACT, &mut -1)
+        } else {
+            entry.insert_text(NEGATIVE, &mut -1)
+        }
         }));
 
     mult_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
