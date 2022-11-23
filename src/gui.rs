@@ -31,8 +31,8 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    let value_1: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
-    let value_2: Rc<Cell<f64>> = Rc::new(Cell::new(NONE));
+    let value_1: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
+    let operand: Rc<Cell<bool>> = Rc::new(Cell::new(false));
 
     let entry = Entry::builder()
         .margin_start(margin)
@@ -48,7 +48,13 @@ pub fn build_ui(application: &gtk::Application) {
         let mut column = 0;
         let mut raw = 1;
 
-        button.connect_clicked(clone!( @strong entry => move |_| {
+        button.connect_clicked(clone!( @strong entry, @strong value_1 => move |_| {
+                if value_1.take() == 0 {
+                    value_1.set(1)
+                } else {
+                    value_1.set(2)
+                }
+                // println!("{}", value_1.take());
                 entry.insert_text(&iterator.to_string(), &mut -1);
             }));
 
@@ -76,27 +82,37 @@ pub fn build_ui(application: &gtk::Application) {
     let clear_button = gtk::Button::with_label("C");
 
     // --> CONNECT FUNCTION TO OPERATOR
-    plus_button.connect_clicked(clone!(@strong entry => move |_| {
+    plus_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
+            operand.set(true);
             entry.insert_text(ADD, &mut -1);
         }));
-    minus_button.connect_clicked(clone!(@strong entry => move |_| {
-            entry.insert_text(SUBTRACT, &mut -1);           
+    minus_button.connect_clicked(clone!(@strong entry, @strong value_1, @strong operand => move |_| {
+            if value_1.take() == 0 || value_1.take() == 2 || operand.take() == true {
+                entry.insert_text(NEGATIVE, &mut -1)
+            } else if value_1.take() == 1 {
+                operand.set(true);
+                entry.insert_text(SUBTRACT, &mut -1)
+            }
+            println!("{}", value_1.take());
         }));
 
-    mult_button.connect_clicked(clone!(@strong entry => move |_| {
+    mult_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
+            operand.set(true);
             entry.insert_text(MULTIPLY, &mut -1);
         }));
 
-    div_button.connect_clicked(clone!(@strong entry => move |_| {
+    div_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
+            operand.set(true);
             entry.insert_text(DIVIDE, &mut -1);
         }));
 
-    equals_bttn.connect_clicked(clone!(@strong entry => move |_| {
+    equals_bttn.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
         let get_entry = entry.text();
         let entry_data: String = format!("{}", get_entry);
         let result = entry_parser(entry_data.clone());
         let entry_vew = format!("{} = {}", entry_data, result);
 
+        operand.set(false);
         entry.set_text(&entry_vew);
         }));
 
@@ -106,7 +122,6 @@ pub fn build_ui(application: &gtk::Application) {
 
     clear_button.connect_clicked(clone!(@strong entry => move |_| {
             value_1.set(NONE);
-            value_2.set(NONE);
             entry.set_text("");
         }));
 

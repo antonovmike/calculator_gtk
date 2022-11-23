@@ -46,7 +46,7 @@ etc.
 - Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 - Tests
-- Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
++ Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
 - Change application_id *
 + Fix wrong input bug (one operand or one operand and operator)
 

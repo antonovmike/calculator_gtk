@@ -6,4 +6,4 @@ pub const DIVIDE: &str = " \u{00F7} "; // " ÷ ";
 pub const NEGATIVE: &str = "-";
 
 pub const EQUALS: &str = " = ";
-pub const NONE: f64 = 0.0;
+pub const NONE: u8 = 0;
