@@ -45,7 +45,6 @@ etc.
 - Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 - Change application_id *
-- Fix this: -1 - -2 = 1
 
 * If it is not "com.github.gtk-rs.examples.grid-packing" - Gtk-CRITICAL
 https://docs.gtk.org/gtk3/ctor.Application.new.html
