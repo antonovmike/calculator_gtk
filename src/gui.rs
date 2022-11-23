@@ -80,7 +80,7 @@ pub fn build_ui(application: &gtk::Application) {
             entry.insert_text(ADD, &mut -1);
         }));
     minus_button.connect_clicked(clone!(@strong entry, @strong value_1, @strong operand => move |_| {
-            if value_1.take() == 0 || value_1.take() == 2 || operand.take() == true {
+            if value_1.take() == 0 || value_1.take() == 2 || operand.take() {
                 entry.insert_text(NEGATIVE, &mut -1)
             } else if value_1.take() == 1 {
                 operand.set(true);
