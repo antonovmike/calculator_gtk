@@ -50,8 +50,7 @@ fn char_check(entry_data: &String) -> bool {
     entry_data.contains(MULTIPLY) || entry_data.contains(DIVIDE)
     { 
         if entry_data.len() > 4 
-        && entry_data.chars().all(|x| x.is_alphanumeric()) == false 
-        // && entry_data.chars().all(|x| x.is_ascii_alphabetic())
+        && !entry_data.chars().all(|x| x.is_alphanumeric())
         && entry_data.chars().last().unwrap().is_numeric() {
             true 
         } else { false }        
