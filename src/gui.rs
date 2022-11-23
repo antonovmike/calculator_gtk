@@ -31,7 +31,7 @@ pub fn build_ui(application: &gtk::Application) {
     window.set_child(Some(&grid));
 
     // --> OPERATIONAL DATA
-    let value_1: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
+    let value: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
     let operand: Rc<Cell<bool>> = Rc::new(Cell::new(false));
 
     let entry = Entry::builder()
@@ -48,13 +48,12 @@ pub fn build_ui(application: &gtk::Application) {
         let mut column = 0;
         let mut raw = 1;
 
-        button.connect_clicked(clone!( @strong entry, @strong value_1 => move |_| {
-                if value_1.take() == 0 {
-                    value_1.set(1)
+        button.connect_clicked(clone!( @strong entry, @strong value => move |_| {
+                if value.take() == 0 {
+                    value.set(1)
                 } else {
-                    value_1.set(2)
+                    value.set(2)
                 }
-                // println!("{}", value_1.take());
                 entry.insert_text(&iterator.to_string(), &mut -1);
             }));
 
@@ -86,14 +85,14 @@ pub fn build_ui(application: &gtk::Application) {
             operand.set(true);
             entry.insert_text(ADD, &mut -1);
         }));
-    minus_button.connect_clicked(clone!(@strong entry, @strong value_1, @strong operand => move |_| {
-            if value_1.take() == 0 || value_1.take() == 2 || operand.take() {
+    minus_button.connect_clicked(clone!(@strong entry, @strong value, @strong operand => move |_| {
+            if value.take() == 0 || value.take() == 2 || operand.take() {
                 entry.insert_text(NEGATIVE, &mut -1)
-            } else if value_1.take() == 1 {
+            } else if value.take() == 1 {
                 operand.set(true);
                 entry.insert_text(SUBTRACT, &mut -1)
             }
-            println!("{}", value_1.take());
+            println!("{}", value.take());
         }));
 
     mult_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
@@ -121,7 +120,7 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     clear_button.connect_clicked(clone!(@strong entry => move |_| {
-            value_1.set(NONE);
+        value.set(NONE);
             entry.set_text("");
         }));
 
