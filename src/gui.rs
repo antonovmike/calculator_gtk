@@ -6,6 +6,10 @@ use std::rc::Rc;
 use gtk::prelude::*;
 use glib_macros::clone;
 
+// If there are no other chars and "-" is the first, type it with no spaces
+// If there are first number type " - "
+// if there are first number and any operand, type "-" with no spaces
+
 use crate::functions::entry_parser;
 use crate::constants::*;
 
