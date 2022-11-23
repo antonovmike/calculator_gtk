@@ -9,7 +9,7 @@ mod gui;
 
 fn main() {
     let application = gtk::Application::new(
-        Some("com.github.gtk-rs.examples.grid-packing"),
+        Some("com.github.gtk-rs.calculator_gtk"),
         Default::default(),
     );
 
