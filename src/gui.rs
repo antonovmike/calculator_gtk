@@ -43,11 +43,8 @@ pub fn build_ui(application: &gtk::Application) {
         let mut raw = 1;
 
         button.connect_clicked(clone!( @strong entry, @strong value => move |_| {
-                if value.take() == 0 {
-                    value.set(1)
-                } else {
-                    value.set(2)
-                }
+                if value.take() == 0    { value.set(1) } 
+                else                    { value.set(2) }
                 entry.insert_text(&iterator.to_string(), &mut -1);
             }));
 
@@ -99,13 +96,13 @@ pub fn build_ui(application: &gtk::Application) {
         }));
 
     equals_bttn.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
-        let get_entry = entry.text();
-        let entry_data: String = format!("{}", get_entry);
-        let result = entry_parser(entry_data.clone());
-        let entry_vew = format!("{} = {}", entry_data, result);
+            let get_entry = entry.text();
+            let entry_data: String = format!("{}", get_entry);
+            let result = entry_parser(entry_data.clone());
+            let entry_vew = format!("{} = {}", entry_data, result);
 
-        operand.set(false);
-        entry.set_text(&entry_vew);
+            operand.set(false);
+            entry.set_text(&entry_vew);
         }));
 
     dot_button.connect_clicked(clone!(@strong entry, => move |_| {
