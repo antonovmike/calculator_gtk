@@ -50,3 +50,13 @@ etc.
 + Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
 + Fix wrong input bug (one operand or one operand and operator)
 + Application ID com.github.gtk-rs.repository_name
+
+
+**"Pick a color" button**
+Accidentally found this feature:
+```rust
+use gdk::RGBA;
+let RGBA = RGBA::new(1.0, 2.0, 3.0, 4.0);   
+let pick_a_color = gtk::ColorButton::with_rgba(&RGBA);
+```
+It creates color picker button. Pretty useless for calculator

@@ -70,6 +70,9 @@ pub fn build_ui(application: &gtk::Application) {
     // --> EXTRA BUTTONS
     let dot_button   = gtk::Button::with_label(".");
     let clear_button = gtk::Button::with_label("C");
+    // "Pick a color" button
+    // let RGBA = RGBA::new(1.0, 2.0, 3.0, 4.0);   
+    // let clear_button = gtk::ColorButton::with_rgba(&RGBA);
 
     // --> CONNECT FUNCTION TO OPERATOR
     plus_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
@@ -125,3 +128,5 @@ pub fn build_ui(application: &gtk::Application) {
 
     window.show_all();
 }
+
+// pub fn with_rgba(rgba: &RGBA) -> ColorButton {}
