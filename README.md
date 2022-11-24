@@ -45,9 +45,6 @@ etc.
 - Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 
-* If it is not "com.github.gtk-rs.examples.grid-packing" - Gtk-CRITICAL
-https://docs.gtk.org/gtk3/ctor.Application.new.html
-
 **FIXED**
 + Tests
 + Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
