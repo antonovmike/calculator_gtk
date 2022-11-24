@@ -43,8 +43,8 @@ pub fn build_ui(application: &gtk::Application) {
         let mut raw = 1;
 
         button.connect_clicked(clone!( @strong entry, @strong value => move |_| {
-            if value.take() == 0 { value.set(1) } 
-            else { value.set(2) }
+            if value.take() == 0    { value.set(1) } 
+            else                    { value.set(2) }
             entry.insert_text(&iterator.to_string(), &mut -1);
         }));
 
