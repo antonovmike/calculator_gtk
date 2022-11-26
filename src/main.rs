@@ -1,8 +1,5 @@
 use gtk::prelude::*;
 
-pub use gdk::Display;
-pub use gtk::{CssProvider, StyleContext};
-
 mod constants;
 mod functions;
 mod gui;
