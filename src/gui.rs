@@ -24,10 +24,11 @@ pub fn build_ui(application: &gtk::Application) {
 
     window.set_child(Some(&grid));
 
-    // --> OPERATIONAL DATA
+    // Operational data
     let value: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
     let operand: Rc<Cell<bool>> = Rc::new(Cell::new(false));
 
+    // Text entry and display
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
@@ -36,7 +37,7 @@ pub fn build_ui(application: &gtk::Application) {
         .build();
     grid.attach(&entry, 0, 0, 3 ,1);
 
-    // NUM BUTTONS
+    // NUM buttons
     for iterator in 0..=9 {
         let button = gtk::Button::with_label(&iterator.to_string());
         let mut column = 0;
@@ -61,17 +62,17 @@ pub fn build_ui(application: &gtk::Application) {
         grid.attach(&button, column, raw, 1, 1);
     }
 
-    // --> OPERATORS
+    // Operators
     let plus_button  = gtk::Button::with_label(ADD);
     let minus_button = gtk::Button::with_label(SUBTRACT);
     let mult_button  = gtk::Button::with_label(MULTIPLY);
     let div_button   = gtk::Button::with_label(DIVIDE);
     let equals_bttn  = gtk::Button::with_label(EQUALS);
-    // --> EXTRA BUTTONS
+    // Extra buttons
     let dot_button   = gtk::Button::with_label(".");
     let clear_button = gtk::Button::with_label("C");
 
-    // --> CONNECT FUNCTION TO OPERATOR
+    // Connect function to operator
     plus_button.connect_clicked(clone!(@strong entry, @strong operand => move |_| {
             operand.set(true);
             entry.insert_text(ADD, &mut -1);
@@ -114,7 +115,7 @@ pub fn build_ui(application: &gtk::Application) {
             entry.set_text("");
         }));
 
-    // --> ATTACH OPERATORS AND EXTRA BUTTONS TO GRID
+    // Attach operators and extra buttons to grid
     grid.attach(&plus_button,  3, 1, 1, 1);
     grid.attach(&minus_button, 3, 2, 1, 1);
     grid.attach(&mult_button,  3, 3, 1, 1);

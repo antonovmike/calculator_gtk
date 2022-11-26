@@ -1,5 +1,5 @@
 use crate::constants::*;
-
+// Does all the math
 pub fn entry_parser(entry_data: String) -> String {
     if char_check(&entry_data) {
         let v: Vec<&str> = entry_data.split(' ').collect();
@@ -22,7 +22,7 @@ pub fn entry_parser(entry_data: String) -> String {
         "0".to_string()
     }
 }
-
+// Remove extra zeroes
 fn extra_zeroes_remover(f: f64) -> String {
     let string_0 = format!("{}", f);
     let mut vec: Vec<char> = string_0.chars().collect();
@@ -35,7 +35,7 @@ fn extra_zeroes_remover(f: f64) -> String {
     
     vec.iter().collect::<String>()
 }
-
+// Check for wrong input
 fn char_check(entry_data: &String) -> bool {
     if 
     entry_data.contains(ADD) || entry_data.contains(SUBTRACT) ||
