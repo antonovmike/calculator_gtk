@@ -2,14 +2,6 @@ pub mod functions;
 pub mod constants;
 
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
-
 #[test]
 fn wrong_input() {
     let entry_data = "-".to_string();
