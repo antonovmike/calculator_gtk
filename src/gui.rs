@@ -1,3 +1,4 @@
+// use gdk::keys::Key;
 use gtk::Entry;
 use std::cell::Cell;
 use std::rc::Rc;
@@ -28,11 +29,32 @@ pub fn build_ui(application: &gtk::Application) {
     let value: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
     let operand: Rc<Cell<bool>> = Rc::new(Cell::new(false));
 
-    
+
     window.connect("key_press_event", false, |values| {
         let raw_event = &values[1].get::<gdk::Event>().unwrap();
         match raw_event.downcast_ref::<gdk::EventKey>() {
             Some(event) => {
+                let key_event = format!("{:?}", event.keyval());
+                match &key_event[..] {
+                    "Key(32)" => println!("Pressed SPACE BAR button"),
+                    "Key(42)" => println!("Pressed SHIFT * button"),
+                    "Key(43)" => println!("Pressed SHIFT + button"),
+                    "Key(45)" => println!("Pressed - button"),
+                    "Key(47)" => println!("Pressed / button"),
+                    "Key(48)" => println!("Pressed 0 button"),
+                    "Key(49)" => println!("Pressed 1 button"),
+                    "Key(50)" => println!("Pressed 2 button"),
+                    "Key(51)" => println!("Pressed 3 button"),
+                    "Key(52)" => println!("Pressed 4 button"),
+                    "Key(53)" => println!("Pressed 5 button"),
+                    "Key(54)" => println!("Pressed 6 button"),
+                    "Key(55)" => println!("Pressed 7 button"),
+                    "Key(56)" => println!("Pressed 8 button"),
+                    "Key(57)" => println!("Pressed 9 button"),
+                    "Key(61)" => println!("Pressed = button"),
+                    _ => println!(),
+                }
+                if format!("{:?}", event.keyval()) == "Key(49)" {println!("Pressed 1 button");}
                 println!("Key name: {:?}", event.keyval());
             },
             None => {},
