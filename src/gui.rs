@@ -28,6 +28,20 @@ pub fn build_ui(application: &gtk::Application) {
     let value: Rc<Cell<u8>> = Rc::new(Cell::new(NONE));
     let operand: Rc<Cell<bool>> = Rc::new(Cell::new(false));
 
+    
+    window.connect("key_press_event", false, |values| {
+        let raw_event = &values[1].get::<gdk::Event>().unwrap();
+        match raw_event.downcast_ref::<gdk::EventKey>() {
+            Some(event) => {
+                println!("Key name: {:?}", event.keyval());
+            },
+            None => {},
+        }
+        let result = glib::value::Value::from_type(glib::types::Type::BOOL);
+        Some(result)
+    });
+
+
     let entry = Entry::builder()
         .margin_start(margin)
         .margin_top(margin)
