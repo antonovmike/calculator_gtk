@@ -40,12 +40,14 @@ Click Button + -> 0.2 +
 etc.
 
 **TODO:**
-- Listen for keyboard events
 - Scrollable Entry
 - Set rounding precision (1.9869999999999999 -> 1,987)
 - Documentation
 
-**FIXED**
+**FIX:**
+- Listen for keyboard events
+
+**FIXED:**
 + Tests
 + Negative numbers (works only if SUBTRACT is "-" and spaces after first number and before last insert manualy)
 + Fix wrong input bug (one operand or one operand and operator)

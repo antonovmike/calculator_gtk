@@ -54,7 +54,6 @@ pub fn build_ui(application: &gtk::Application) {
                     "Key(61)" => println!("Pressed = button"),
                     _ => println!(),
                 }
-                if format!("{:?}", event.keyval()) == "Key(49)" {println!("Pressed 1 button");}
                 println!("Key name: {:?}", event.keyval());
             },
             None => {},
