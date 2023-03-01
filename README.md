@@ -1,6 +1,6 @@
 # calculator_gtk
 
-Here is a [Python version](https://github.com/antonovmike/calculator_gtk_2)
+This a Rust version. Here is a [Python version](https://github.com/antonovmike/calculator_gtk_2)
 
 ![calculator_gtk](https://github.com/antonovmike/calculator_gtk/blob/main/calculator_gtk.gif)
 
