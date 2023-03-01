@@ -1,5 +1,7 @@
 # calculator_gtk
 
+[Python version](https://github.com/antonovmike/calculator_gtk_2)
+
 ![calculator_gtk](https://github.com/antonovmike/calculator_gtk/blob/main/calculator_gtk.gif)
 
 **Install gtk-3-dev**
