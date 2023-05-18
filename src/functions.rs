@@ -1,25 +1,33 @@
 use crate::constants::*;
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum Error {
+    #[error("Failed to parse float value")]
+    ParseError(#[from] std::num::ParseFloatError),
+}
+
 // Does all the math
-pub fn entry_parser(entry_data: String) -> String {
+pub fn entry_parser(entry_data: String) -> Result<String, Error> {
     if char_check(&entry_data) {
         let v: Vec<&str> = entry_data.split(' ').collect();
         let operand = v[1].parse::<char>().unwrap();
 
         match operand {
-            '+' => (v[0].parse::<f64>().unwrap() + v[2].parse::<f64>().unwrap()).to_string(),
-            '-' => (v[0].parse::<f64>().unwrap() - v[2].parse::<f64>().unwrap()).to_string(),
-            '×' => format!(
+            '+' => Ok((v[0].parse::<f64>()? + v[2].parse::<f64>()?).to_string()),
+            '-' => Ok((v[0].parse::<f64>()? - v[2].parse::<f64>()?).to_string()),
+            '×' => Ok(format!(
                 "{:.6}",
-                extra_zeroes_remover(v[0].parse::<f64>().unwrap() * v[2].parse::<f64>().unwrap())
-            ),
-            '÷' => format!(
+                extra_zeroes_remover(v[0].parse::<f64>()? * v[2].parse::<f64>()?)
+            )),
+            '÷' => Ok(format!(
                 "{:.6}",
-                extra_zeroes_remover(v[0].parse::<f64>().unwrap() / v[2].parse::<f64>().unwrap())
-            ),
-            _ => "0".to_string(),
+                extra_zeroes_remover(v[0].parse::<f64>()? / v[2].parse::<f64>()?)
+            )),
+            _ => Ok("0".to_string()),
         }
     } else {
-        "0".to_string()
+        Ok("0".to_string())
     }
 }
 // Remove extra zeroes

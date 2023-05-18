@@ -100,7 +100,7 @@ pub fn build_ui(application: &gtk::Application) {
             let get_entry = entry.text();
             let entry_data: String = format!("{}", get_entry);
             let result = entry_parser(entry_data.clone());
-            let entry_vew = format!("{} = {}", entry_data, result);
+            let entry_vew = format!("{} = {}", entry_data, result.unwrap());
 
             operand.set(false);
             entry.set_text(&entry_vew);
