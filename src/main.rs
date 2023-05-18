@@ -6,7 +6,7 @@ mod gui;
 
 fn main() {
     let application = gtk::Application::new(
-        Some("com.github.gtk-rs.calculator_gtk"),
+        Some("com.GTK.calculator"),
         Default::default(),
     );
 
