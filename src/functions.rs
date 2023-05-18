@@ -4,14 +4,17 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum Error {
     #[error("Failed to parse float value")]
-    ParseError(#[from] std::num::ParseFloatError),
+    FloatError(#[from] std::num::ParseFloatError),
+
+    #[error("Failed to parse float value")]
+    CharError(#[from] std::char::ParseCharError),
 }
 
 // Does all the math
 pub fn entry_parser(entry_data: String) -> Result<String, Error> {
     if char_check(&entry_data) {
         let v: Vec<&str> = entry_data.split(' ').collect();
-        let operand = v[1].parse::<char>().unwrap();
+        let operand = v[1].parse::<char>()?;
 
         match operand {
             '+' => Ok((v[0].parse::<f64>()? + v[2].parse::<f64>()?).to_string()),
