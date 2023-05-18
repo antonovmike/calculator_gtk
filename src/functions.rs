@@ -9,10 +9,9 @@ pub enum Error {
     #[error("Failed to parse char value")]
     CharParseError(#[from] std::char::ParseCharError),
 
-    #[error("Failed to parse char value")]
+    #[error("Failed to return the last element")]
     CharLastError(#[from] std::char::TryFromCharError),
 }
-
 // Does all the math
 pub fn entry_parser(entry_data: String) -> Result<String, Error> {
     if char_check(&entry_data).unwrap() {
